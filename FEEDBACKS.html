@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Feedback – Gloria d'Or Visuals</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ================= SECTION TESTIMONIALS ================= */
+
+.testimonials-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    padding-bottom: 30px;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 20% 80%, rgba(192,123,23,0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 20%, rgba(234,177,86,0.05) 0%, transparent 20%),
+                radial-gradient(circle at 40% 40%, rgba(255,215,0,0.03) 0%, transparent 30%);
+}
+
+.testimonials-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        transparent 20%, 
+        rgba(192, 123, 23, 0.1) 40%, 
+        rgba(234, 177, 86, 0.2) 50%,
+        rgba(192, 123, 23, 0.1) 60%, 
+        transparent 80%);
+    z-index: 1;
+    animation: borderGlow 4s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+.sparkles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sparkle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(234, 177, 86, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: sparkleFloat 4s infinite ease-in-out;
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+    50% { opacity: 1; transform: translateY(-20px) scale(1); }
+}
+
+/* ================= TITLE ================= */
+
+.testimonials-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 3;
+}
+
+.testimonials-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; 
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.testimonials-title h2,
+.testimonials-title p {
+    text-align: center;
+}
+
+.testimonials-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #c07b17, #eab156);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px; 
+}
+
+.testimonials-title p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+/* Flèches à droite du titre */
+.testimonials-title .slider-controls {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+/* ================= SLIDER ================= */
+
+.testimonials-slider {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-track-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.7s cubic-bezier(.4,0,.2,1);
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= CARD ================= */
+
+.testimonial-image-card {
+    position: relative;
+    flex: 0 0 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    filter: blur(4px);
+    opacity: 0.6;
+}
+
+.testimonial-image-card.center {
+    filter: blur(0);
+    opacity: 1;
+}
+
+.testimonial-image-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 14px;
+}
+
+/* ================= CONTROLS ================= */
+
+.slider-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #c07b17;
+    color: #ffd700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 12px #eab156, 0 0 24px #c07b17;
+}
+
+.slider-btn:hover {
+    background: rgba(192,123,23,0.3);
+    box-shadow: 0 0 25px #ffd700, 0 0 50px #eab156;
+}
+
+/* ================= SECTION BOOKING ================= */
+
+.booking-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 20% 80%, rgba(192,123,23,0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 20%, rgba(234,177,86,0.05) 0%, transparent 20%),
+                radial-gradient(circle at 40% 40%, rgba(255,215,0,0.03) 0%, transparent 30%);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.booking-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        transparent 20%, 
+        rgba(192, 123, 23, 0.1) 40%, 
+        rgba(234, 177, 86, 0.2) 50%,
+        rgba(192, 123, 23, 0.1) 60%, 
+        transparent 80%);
+    z-index: 1;
+    animation: borderGlow 4s ease-in-out infinite;
+}
+
+.booking-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 3;
+}
+
+/* Titres de la section booking */
+.booking-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.booking-title h1,
+.booking-title p {
+    text-align: center;
+}
+
+.booking-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #c07b17, #eab156);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+}
+
+.booking-title p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+/* Cadre doré brillant pour le formulaire */
+.form-gold-frame {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 3px;
+    background: linear-gradient(45deg, 
+        #c07b17, 
+        #eab156, 
+        #ffd700, 
+        #eab156, 
+        #c07b17);
+    border-radius: 16px;
+    z-index: 3;
+    animation: goldShine 3s ease-in-out infinite alternate;
+}
+
+@keyframes goldShine {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+.form-gold-frame::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        #c07b17, 
+        #eab156, 
+        #ffd700, 
+        #eab156, 
+        #c07b17);
+    border-radius: 18px;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.6;
+}
+
+.booking-form-container {
+    position: relative;
+    background: rgba(10, 10, 10, 0.95);
+    border-radius: 14px;
+    padding: 30px 35px;
+    z-index: 1;
+}
+
+/* Formulaire */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Groupes de formulaire */
+.form-row {
+    display: flex;
+    gap: 18px;
+    width: 100%;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: #eab156;
+    margin-bottom: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-group label i {
+    color: #ffd700;
+    font-size: 0.9rem;
+    width: 16px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(192, 123, 23, 0.5);
+    border-radius: 7px;
+    padding: 11px 14px;
+    font-size: 0.85rem;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder,
+.form-group select option:first-child,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Style personnalisé pour les dropdowns */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffd700' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+    padding-right: 35px;
+    cursor: pointer;
+    border: 1px solid rgba(234, 177, 86, 0.7);
+    background-color: rgba(15, 15, 15, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(234, 177, 86, 0.1);
+}
+
+.form-group select:hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* Titres des sections */
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #eab156;
+    margin: 6px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(234, 177, 86, 0.3);
+    width: 100%;
+}
+
+/* Pack options */
+.packs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 15px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.pack-card {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 10px;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.pack-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.pack-card.selected {
+    border-color: currentColor;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pack-card input {
+    display: none;
+}
+
+.pack-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.pack-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.pack-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.pack-card.selected .pack-check {
+    opacity: 1;
+    background: #ffd700;
+    color: #000;
+}
+
+/* Styles spécifiques pour chaque pack */
+.pack-silver {
+    border-color: #b0b0b0;
+    color: #b0b0b0;
+}
+
+.pack-silver .pack-icon {
+    color: #b0b0b0;
+}
+
+.pack-silver.selected {
+    border-color: #e0e0e0;
+    box-shadow: 0 8px 20px rgba(224, 224, 224, 0.15);
+}
+
+.pack-gold {
+    border-color: #eab156;
+    color: #eab156;
+}
+
+.pack-gold .pack-icon {
+    color: #eab156;
+}
+
+.pack-gold.selected {
+    border-color: #ffd700;
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+}
+
+.pack-royal {
+    border-color: #ffd700;
+    color: #ffd700;
+}
+
+.pack-royal .pack-icon {
+    color: #ffd700;
+}
+
+.pack-royal.selected {
+    border-color: #ffd700;
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.25);
+}
+
+.pack-custom {
+    border-color: #c07b17;
+    color: #c07b17;
+}
+
+.pack-custom .pack-icon {
+    color: #c07b17;
+}
+
+.pack-custom.selected {
+    border-color: #eab156;
+    box-shadow: 0 8px 20px rgba(234, 177, 86, 0.2);
+}
+
+/* Custom pack description */
+.custom-pack-description {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.custom-pack-description textarea {
+    min-height: 80px;
+    resize: vertical;
+    font-size: 0.85rem;
+}
+
+/* Lien cliquable pour les packs */
+.packs-link {
+    color: #ffd700;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(255, 215, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.packs-link:hover {
+    color: #eab156;
+    border-bottom: 1px solid #eab156;
+}
+
+/* Modal pour afficher l'image des packs */
+.packs-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.packs-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.packs-modal {
+    position: relative;
+    background: rgba(15, 15, 15, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 90%;
+    max-height: 90%;
+    border: 2px solid rgba(234, 177, 86, 0.5);
+    box-shadow: 0 0 30px rgba(234, 177, 86, 0.3);
+    animation: modalAppear 0.3s ease;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.packs-modal img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: 8px;
+    display: block;
+}
+
+.close-modal {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 35px;
+    height: 35px;
+    background: rgba(234, 177, 86, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: 2px solid #ffd700;
+    transition: all 0.3s ease;
+    z-index: 10000;
+}
+
+.close-modal:hover {
+    background: #ffd700;
+    transform: rotate(90deg);
+}
+
+/* Contact methods */
+.contact-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+}
+
+.contact-method {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(192, 123, 23, 0.5);
+    border-radius: 7px;
+    padding: 11px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contact-method:hover {
+    border-color: #ffd700;
+    transform: translateY(-2px);
+}
+
+.contact-method input {
+    margin-right: 8px;
+    accent-color: #ffd700;
+    transform: scale(1.1);
+}
+
+.contact-method label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.85rem;
+    flex: 1;
+}
+
+.contact-method i {
+    color: #ffd700;
+    font-size: 1rem;
+}
+
+/* Submit button */
+.submit-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+    width: 100%;
+}
+
+.submit-btn {
+    background: transparent;
+    border: 1px solid rgba(192, 123, 23, 0.7);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 5px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(192, 123, 23, 0.2);
+    animation: pulsePacks 3s infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes pulsePacks {
+    0%, 100% { 
+        box-shadow: 
+            0 5px 20px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(192, 123, 23, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 5px 25px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(234, 177, 86, 0.4),
+            0 0 15px rgba(234, 177, 86, 0.2);
+    }
+}
+
+.submit-btn:hover {
+    background: rgba(192, 123, 23, 0.1);
+    border-color: #ffd700;
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 215, 0, 0.5),
+        0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Required field indicator */
+.required::after {
+    content: " *";
+    color: #ff4757;
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .testimonial-image-card {
+        flex: 0 0 180px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .packs-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-form-container {
+        padding: 25px 20px;
+    }
+    
+    .form-gold-frame {
+        padding: 2px;
+        max-width: 95%;
+    }
+    
+    .packs-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-methods {
+        flex-direction: column;
+    }
+    
+    .contact-method {
+        min-width: 100%;
+    }
+    
+    .booking-title h1 {
+        font-size: 2rem;
+    }
+    
+    .booking-title p {
+        font-size: 1.6rem;
+    }
+    
+    .packs-modal {
+        max-width: 95%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 640px) {
+    .testimonial-image-card {
+        flex: 0 0 140px;
+    }
+
+    .testimonials-title h2 {
+        font-size: 1.8rem;
+    }
+
+    .testimonials-title p {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .booking-wrapper,
+    .testimonials-wrapper {
+        padding: 0 20px;
+    }
+    
+    .booking-title h1 {
+        font-size: 1.8rem;
+    }
+    
+    .booking-title p {
+        font-size: 1.4rem;
+    }
+    
+    .form-group label {
+        font-size: 0.8rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.8rem;
+        padding: 10px 12px;
+    }
+    
+    .submit-btn {
+        padding: 11px 35px;
+        font-size: 0.95rem;
+    }
+    
+    .pack-icon {
+        font-size: 1.8rem;
+    }
+    
+    .close-modal {
+        top: -10px;
+        right: -10px;
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Modal pour les packs -->
+<div class="packs-modal-overlay" id="packsModal">
+    <div class="packs-modal">
+        <div class="close-modal" id="closeModal">
+            <i class="fas fa-times"></i>
+        </div>
+        <img src="packss.png" alt="Our Packs Details" id="packsImage">
+    </div>
+</div>
+
+<section class="testimonials-section">
+    <div class="sparkles" id="sparklesContainer1"></div>
+
+    <div class="testimonials-wrapper">
+        <div class="testimonials-title">
+            <div>
+                <h2>What do they say about us?</h2>
+                <p>Gloria d'Or Testimonials</p>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn" id="prevBtn">&#10094;</button>
+                <button class="slider-btn" id="nextBtn">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="testimonials-slider">
+            <div class="slider-track-container">
+                <div class="slider-track" id="sliderTrack">
+                    <div class="testimonial-image-card"><img src="maria.png" class="testimonial-image"></div>
+                    <div class="testimonial-image-card"><img src="khawla.png" class="testimonial-image"></div>
+                    <div class="testimonial-image-card center"><img src="meryem.png" class="testimonial-image"></div>
+                    <div class="testimonial-image-card"><img src="maria.png" class="testimonial-image"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION BOOKING -->
+<section class="booking-section">
+    <div class="sparkles" id="sparklesContainer2"></div>
+
+    <div class="booking-wrapper">
+        <div class="booking-title">
+            <div>
+                <h1>Book Now</h1>
+                <p>Select the service that suits you best</p>
+            </div>
+        </div>
+
+        <div class="form-gold-frame">
+            <div class="booking-form-container">
+                <form class="booking-form" id="bookingForm">
+                    <!-- Personal Information -->
+                    <h3 class="section-title">Personal Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName" class="required"><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="required"><i class="fas fa-phone"></i> Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" class="required"><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDate" class="required"><i class="fas fa-calendar-alt"></i> Event Date</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventLocation" class="required"><i class="fas fa-map-marker-alt"></i> Event Location</label>
+                            <input type="text" id="eventLocation" name="eventLocation" required placeholder="Enter the event location">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="capacity" class="required"><i class="fas fa-users"></i> Capacity</label>
+                            <input type="number" id="capacity" name="capacity" min="1" max="1000" required placeholder="Enter the number of people">
+                        </div>
+                    </div>
+                    
+                    <!-- Event Type (Dropdown) -->
+                    <div class="form-group">
+                        <label for="eventType" class="required"><i class="fas fa-calendar"></i> Event Type</label>
+                        <select id="eventType" name="eventType" required>
+                            <option value="" disabled selected>Select event type</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="anniversary">Anniversary</option>
+                            <option value="event">Event</option>
+                            <option value="baptism">Baptism</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Choose Your Pack (visible only for Wedding) -->
+                    <div id="weddingPacksSection" style="display: none;">
+                        <h3 class="section-title">Choose Your Pack</h3>
+                        
+                        <div class="packs-container" id="weddingPacks">
+                            <div class="pack-card pack-silver" data-pack="silver">
+                                <input type="radio" id="packSilver" name="pack" value="silver">
+                                <div class="pack-icon">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <h4>Pack Silver</h4>
+                                <div class="pack-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="pack-card pack-gold" data-pack="gold">
+                                <input type="radio" id="packGold" name="pack" value="gold">
+                                <div class="pack-icon">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <h4>Pack Gold</h4>
+                                <div class="pack-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="pack-card pack-royal" data-pack="royal">
+                                <input type="radio" id="packRoyal" name="pack" value="royal">
+                                <div class="pack-icon">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <h4>Pack Royal</h4>
+                                <div class="pack-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="pack-card pack-custom" data-pack="custom">
+                                <input type="radio" id="packCustom" name="pack" value="custom">
+                                <div class="pack-icon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <h4>Custom Pack</h4>
+                                <div class="pack-check">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-pack-description" id="customPackDescription">
+                            <div class="form-group">
+                                <label for="customDescription">
+                                    <i class="fas fa-edit"></i> Choose what you need from 
+                                    <span class="packs-link" id="showPacksLink">our packs</span> 
+                                    and additional services — we take care of the rest.
+                                </label>
+                                <textarea id="customDescription" name="customDescription" placeholder="Describe your custom requirements..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Preferred Contact Method -->
+                    <h3 class="section-title">Preferred Contact Method</h3>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <input type="radio" id="contactPhone" name="contactMethod" value="phone">
+                            <label for="contactPhone"><i class="fas fa-phone"></i> Phone call</label>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <input type="radio" id="contactWhatsApp" name="contactMethod" value="whatsapp">
+                            <label for="contactWhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</label>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <input type="radio" id="contactEmail" name="contactMethod" value="email">
+                            <label for="contactEmail"><i class="fas fa-envelope"></i> Email</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Notes -->
+                    <h3 class="section-title">Additional Notes</h3>
+                    
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment"></i> Message</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Enter any special requests or additional information..."></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="submit-container">
+                        <button type="submit" class="submit-btn">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+const track = document.getElementById("sliderTrack");
+const cards = document.querySelectorAll(".testimonial-image-card");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+let currentSlide = 2;
+
+function updateSlider() {
+    const cardWidth = cards[0].offsetWidth + 20;
+    const translateX = -(currentSlide * cardWidth) + (window.innerWidth/2 - cardWidth/2);
+    track.style.transform = `translateX(${translateX}px)`;
+
+    cards.forEach((card, index) => {
+        if(index === currentSlide){
+            card.classList.add('center');
+        } else {
+            card.classList.remove('center');
+        }
+    });
+}
+
+nextBtn.addEventListener("click", () => {
+    if (currentSlide < cards.length - 1) {
+        currentSlide++;
+        updateSlider();
+    }
+});
+
+prevBtn.addEventListener("click", () => {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlider();
+    }
+});
+
+window.addEventListener("resize", updateSlider);
+window.addEventListener("DOMContentLoaded", updateSlider);
+
+/* PARTICULES */
+function createSparkles(containerId, count = 30) {
+    const container = document.getElementById(containerId);
+    for (let i = 0; i < count; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        const size = Math.random() * 25 + 5;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.top = `${Math.random() * 100}%`;
+        sparkle.style.animationDelay = `${Math.random() * 4}s`;
+        container.appendChild(sparkle);
+    }
+}
+
+/* GESTION DU FORMULAIRE */
+document.addEventListener('DOMContentLoaded', function() {
+    // Créer des particules pour les deux sections
+    createSparkles('sparklesContainer1', 30);
+    createSparkles('sparklesContainer2', 25);
+    
+    // Gestion du type d'événement (dropdown)
+    const eventTypeSelect = document.getElementById('eventType');
+    const weddingPacksSection = document.getElementById('weddingPacksSection');
+    
+    eventTypeSelect.addEventListener('change', function() {
+        // Afficher/masquer la section des packs mariage
+        if (this.value === 'wedding') {
+            weddingPacksSection.style.display = 'block';
+        } else {
+            weddingPacksSection.style.display = 'none';
+        }
+    });
+    
+    // Gestion des packs
+    const packCards = document.querySelectorAll('.pack-card');
+    const customPackDescription = document.getElementById('customPackDescription');
+    
+    packCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Retirer la classe selected de toutes les cartes
+            packCards.forEach(c => c.classList.remove('selected'));
+            
+            // Ajouter la classe selected à la carte cliquée
+            this.classList.add('selected');
+            
+            // Cocher le radio button correspondant
+            const radioInput = this.querySelector('input[type="radio"]');
+            radioInput.checked = true;
+            
+            // Afficher/masquer la description pour le pack personnalisé
+            if (radioInput.value === 'custom') {
+                customPackDescription.style.display = 'block';
+            } else {
+                customPackDescription.style.display = 'none';
+            }
+        });
+    });
+    
+    // Gestion du modal pour afficher les packs
+    const showPacksLink = document.getElementById('showPacksLink');
+    const packsModal = document.getElementById('packsModal');
+    const closeModal = document.getElementById('closeModal');
+    const packsImage = document.getElementById('packsImage');
+    
+    // Fonction pour ouvrir le modal
+    function openPacksModal() {
+        packsModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Fonction pour fermer le modal
+    function closePacksModal() {
+        packsModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Événements pour ouvrir/fermer le modal
+    if (showPacksLink) {
+        showPacksLink.addEventListener('click', openPacksModal);
+    }
+    
+    if (closeModal) {
+        closeModal.addEventListener('click', closePacksModal);
+    }
+    
+    // Fermer le modal en cliquant à l'extérieur
+    packsModal.addEventListener('click', function(e) {
+        if (e.target === packsModal) {
+            closePacksModal();
+        }
+    });
+    
+    // Fermer le modal avec la touche Échap
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && packsModal.classList.contains('active')) {
+            closePacksModal();
+        }
+    });
+    
+    // Gestion de l'image des packs - vérifier si elle existe
+    if (packsImage) {
+        // Ajouter un fallback si l'image ne se charge pas
+        packsImage.onerror = function() {
+            this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23202020"/><text x="200" y="150" font-family="Arial" font-size="16" fill="%23eab156" text-anchor="middle">Packs Image Preview</text><text x="200" y="180" font-family="Arial" font-size="14" fill="%23cccccc" text-anchor="middle">packss.png</text></svg>';
+            console.log("Image packs.png non trouvée. Utilisation d'un fallback.");
+        };
+    }
+    
+    // Gestion de la soumission du formulaire
+    const bookingForm = document.getElementById('bookingForm');
+    bookingForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validation
+        const fullName = document.getElementById('fullName').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventLocation = document.getElementById('eventLocation').value;
+        const capacity = document.getElementById('capacity').value;
+        const eventType = document.getElementById('eventType').value;
+        const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
+        
+        if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
+            alert('Please fill in all required fields (*).');
+            return;
+        }
+        
+        // Validation de la capacité
+        if (capacity < 1 || capacity > 1000) {
+            alert('Please enter a valid capacity between 1 and 1000 people.');
+            return;
+        }
+        
+        // Vérification supplémentaire pour les mariages
+        if (eventType === 'wedding') {
+            const selectedPack = document.querySelector('input[name="pack"]:checked');
+            if (!selectedPack) {
+                alert('Please select a wedding pack.');
+                return;
+            }
+        }
+        
+        // Animation de succès
+        const submitBtn = document.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = 'Submitted!';
+        submitBtn.style.borderColor = '#28a745';
+        submitBtn.style.animation = 'none';
+        submitBtn.style.boxShadow = '0 5px 20px rgba(40, 167, 69, 0.4)';
+        
+        setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.style.borderColor = 'rgba(192, 123, 23, 0.7)';
+            submitBtn.style.animation = 'pulsePacks 3s infinite';
+            submitBtn.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(192, 123, 23, 0.2)';
+            
+            bookingForm.reset();
+            
+            // Réinitialiser l'UI
+            packCards.forEach(c => c.classList.remove('selected'));
+            weddingPacksSection.style.display = 'none';
+            customPackDescription.style.display = 'none';
+            
+            alert('Thank you for your booking request! We will contact you soon via your preferred method.');
+        }, 2000);
+    });
+    
+    // Date minimum pour l'événement (aujourd'hui)
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').setAttribute('min', today);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Packs – Gloria d'Or Visuals</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ================= SECTION ================= */
+
+.wedding-packs-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    /* ESPACEMENT AJOUTÉ EN HAUT ET EN BAS */
+    padding: 80px 0;
+}
+
+/* Pour mobile */
+@media (max-width: 768px) {
+    .wedding-packs-section {
+        padding: 40px 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .wedding-packs-section {
+        padding: 25px 0;
+    }
+}
+
+/* Vidéo de fond avec opacité et crop amélioré */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+    z-index: 1;
+    transform: rotate(5deg) scale(1.15); /* Zoom augmenté pour mieux cacher */
+    transform-origin: center;
+    /* Masquer les dernières secondes avec overflow caché */
+    overflow: hidden;
+}
+
+/* Container pour cacher les bords de la vidéo */
+.video-container {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Overlay noir pour mieux faire ressortir le contenu */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.wedding-packs-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        transparent 20%, 
+        rgba(192, 123, 23, 0.1) 40%, 
+        rgba(234, 177, 86, 0.2) 50%,
+        rgba(192, 123, 23, 0.1) 60%, 
+        transparent 80%);
+    z-index: 3;
+    animation: borderGlow 4s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+.sparkles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.sparkle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(234, 177, 86, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: sparkleFloat 4s infinite ease-in-out;
+}
+
+@keyframes sparkleFloat {
+    0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
+    50% { opacity: 1; transform: translateY(-20px) scale(1); }
+}
+
+/* ================= CONTENU PRINCIPAL ================= */
+
+.wedding-packs-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* espace réduit entre titre et sous-titre */
+    z-index: 5;
+}
+
+/* ================= TITRES ================= */
+
+.titles-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; 
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.titles-content {
+    text-align: center;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #c07b17, #eab156);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px; 
+}
+
+.sub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+/* Flèches à droite des titres */
+.slider-controls {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+/* ================= DESCRIPTION ================= */
+
+.description {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0 20px;
+}
+
+.description strong {
+    font-weight: 600;
+    background: linear-gradient(90deg, #c07b17, #eab156);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ================= SLIDER QUI PREND TOUTE LA LARGEUR ================= */
+
+.wedding-packs-slider {
+    position: relative;
+    width: 100vw; /* Prend toute la largeur de la fenêtre */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.slider-track-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    gap: 30px;
+    transition: transform 0.7s cubic-bezier(.4,0,.2,1);
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 20px;
+}
+
+/* ================= CARTES DES PACKS ================= */
+
+.pack-card {
+    position: relative;
+    flex: 0 0 320px; /* taille des cartes augmentée */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    filter: blur(4px); /* flou par défaut */
+    opacity: 0.6;
+    transform: scale(0.9);
+}
+
+.pack-card.center {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+}
+
+.pack-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease;
+}
+
+/* SUPPRIMER LES TITRES DES PACKS */
+.pack-name {
+    display: none; /* Cache tous les titres des packs */
+}
+
+/* ================= BOUTONS ================= */
+
+.slider-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #c07b17;
+    color: #ffd700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 12px #eab156, 0 0 24px #c07b17;
+    z-index: 10;
+}
+
+.slider-btn:hover {
+    background: rgba(192,123,23,0.3);
+    box-shadow: 0 0 25px #ffd700, 0 0 50px #eab156;
+}
+
+/* ================= CADRE "ADDITIONAL SERVICES" AMÉLIORÉ ================= */
+
+.additional-services {
+    max-width: 750px; /* Réduit la largeur maximale */
+    margin: 60px auto 0;
+    padding: 20px 25px; /* Padding réduit */
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #c07b17, #eab156) 1;
+    background: rgba(0, 0, 0, 0.7);
+    position: relative;
+    z-index: 5;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 30px rgba(192, 123, 23, 0.3);
+    transition: all 0.3s ease;
+}
+
+.additional-services:hover {
+    box-shadow: 0 0 50px rgba(234, 177, 86, 0.5);
+    transform: translateY(-5px);
+}
+
+.additional-services::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        transparent 20%, 
+        rgba(192, 123, 23, 0.1) 40%, 
+        rgba(234, 177, 86, 0.2) 50%,
+        rgba(192, 123, 23, 0.1) 60%, 
+        transparent 80%);
+    z-index: -1;
+    animation: borderGlow 4s ease-in-out infinite;
+}
+
+.additional-services::after {
+    content: '';
+    position: absolute;
+    top: 8px; /* Réduit */
+    left: 8px; /* Réduit */
+    right: 8px; /* Réduit */
+    bottom: 8px; /* Réduit */
+    border: 1px solid rgba(192, 123, 23, 0.2);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.services-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; /* Réduit */
+    font-weight: 600;
+    background: linear-gradient(90deg, #c07b17, #eab156);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px; /* Réduit */
+    text-align: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.services-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colonnes plus étroites */
+    gap: 10px; /* Espacement réduit */
+}
+
+.services-list li {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; /* Taille de police réduite */
+    color: rgba(255, 255, 255, 0.9);
+    padding: 6px 0 6px 20px; /* Padding réduit */
+    position: relative;
+    border-bottom: 1px solid rgba(192, 123, 23, 0.2);
+    transition: all 0.3s ease;
+}
+
+.services-list li:hover {
+    color: #fff;
+    padding-left: 25px; /* Réduit */
+    border-bottom-color: rgba(234, 177, 86, 0.5);
+}
+
+.services-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: #eab156;
+    font-weight: bold;
+    font-size: 0.9rem; /* Réduit */
+    transition: all 0.3s ease;
+}
+
+.services-list li:hover::before {
+    transform: scale(1.2); /* Réduit */
+    color: #ffd700;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+    .pack-card {
+        flex: 0 0 280px;
+    }
+    
+    .additional-services {
+        max-width: 650px;
+    }
+    
+    .services-list {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .wedding-packs-wrapper {
+        padding: 0 20px;
+    }
+    
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .sub-title {
+        font-size: 1.5rem;
+    }
+    
+    .titles-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .slider-controls {
+        margin-left: 0;
+    }
+    
+    .description {
+        font-size: 0.8rem; /* Réduit sur mobile */
+        padding: 0 10px;
+    }
+    
+    .pack-card {
+        flex: 0 0 220px;
+    }
+    
+    .wedding-packs-slider {
+        margin: 30px 0;
+    }
+    
+    .slider-track {
+        gap: 20px;
+        padding: 0 15px;
+    }
+    
+    .additional-services {
+        max-width: 90%;
+        padding: 18px 15px;
+        margin: 40px auto 0;
+    }
+    
+    .services-title {
+        font-size: 1.1rem;
+    }
+    
+    .services-list li {
+        font-size: 0.8rem;
+        padding: 5px 0 5px 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    .pack-card {
+        flex: 0 0 180px;
+    }
+    
+    .main-title {
+        font-size: 1.6rem;
+    }
+    
+    .sub-title {
+        font-size: 1.3rem;
+    }
+    
+    .description {
+        font-size: 0.75rem;
+    }
+    
+    .wedding-packs-slider {
+        margin: 25px 0;
+    }
+    
+    .slider-track {
+        gap: 15px;
+        padding: 0 10px;
+    }
+    
+    .additional-services {
+        padding: 15px 12px;
+        max-width: 95%;
+        margin: 30px auto 0;
+    }
+    
+    .services-title {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .services-list li {
+        font-size: 0.75rem;
+        padding: 4px 0 4px 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="wedding-packs-section">
+    <!-- Container pour mieux cacher les bords de la vidéo -->
+    <div class="video-container">
+        <!-- Vidéo de fond avec crop amélioré -->
+        <video autoplay muted loop playsinline class="video-background" id="backgroundVideo">
+            <source src="vidvid.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas les vidéos HTML5.
+        </video>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="overlay"></div>
+    
+    <!-- Particules brillantes -->
+    <div class="sparkles" id="sparklesContainer"></div>
+
+    <div class="wedding-packs-wrapper">
+
+        <!-- Titres avec flèches à droite -->
+        <div class="titles-container">
+            <div class="titles-content">
+                <h1 class="main-title">Wedding Packs</h1>
+                <h2 class="sub-title">Luxury & Emotion</h2>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn" id="prevBtn">&#10094;</button>
+                <button class="slider-btn" id="nextBtn">&#10095;</button>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="description">
+            Turn your most precious moments into lasting memories. With Gloria d'Or Photo & Video, every detail is captured with care and elegance. Choose from <strong>Silver</strong>, <strong>Gold</strong>, <strong>Royal</strong>, or create a <strong>Custom</strong> Pack to make your day unforgettable.
+        </div>
+
+        <!-- Carrousel des packs qui prend toute la largeur -->
+        <div class="wedding-packs-slider">
+            <div class="slider-track-container">
+                <div class="slider-track" id="sliderTrack">
+
+                    <div class="pack-card">
+                        <img src="silver.png" alt="Silver Wedding Pack">
+                        <!-- Titre supprimé -->
+                    </div>
+                    <div class="pack-card">
+                        <img src="gold.png" alt="Gold Wedding Pack">
+                        <!-- Titre supprimé -->
+                    </div>
+                    <div class="pack-card center">
+                        <img src="royal.png" alt="Royal Wedding Pack">
+                        <!-- Titre supprimé -->
+                    </div>
+                    <div class="pack-card">
+                        <img src="custom.png" alt="Custom Wedding Pack">
+                        <!-- Titre supprimé -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Cadre "Additional Services" amélioré et réduit -->
+        <div class="additional-services">
+            <h3 class="services-title">Additional Services:</h3>
+            <ul class="services-list">
+                <li>Professional "Best Of" video</li>
+                <li>Professional Photo Book</li>
+                <li>Signature photo at the reception entrance</li>
+                <li>Enlarged photo with frame</li>
+                <li>Giant screen / Plasma display</li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<script>
+const track = document.getElementById("sliderTrack");
+const cards = document.querySelectorAll(".pack-card");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const video = document.getElementById("backgroundVideo");
+
+let currentSlide = 2; // carte centrale au départ (Royal)
+
+// Gestion améliorée du crop de la vidéo
+if (video) {
+    // On attend que la vidéo soit chargée
+    video.addEventListener('loadedmetadata', function() {
+        // Définir la durée de la boucle pour couper les 2 dernières secondes
+        const duration = video.duration;
+        if (duration > 2) {
+            video.currentTime = 0;
+            
+            // Redémarrer la vidéo 2 secondes avant la fin
+            video.addEventListener('timeupdate', function() {
+                if (this.currentTime > duration - 2.1) { // 2.1 pour une marge de sécurité
+                    this.currentTime = 0;
+                }
+            });
+        }
+    });
+    
+    // Forcer le redémarrage au début si la vidéo atteint la fin
+    video.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    });
+}
+
+function updateSlider() {
+    const cardWidth = cards[0].offsetWidth + 30; // + gap
+    const translateX = -(currentSlide * cardWidth) + (window.innerWidth/2 - cardWidth/2);
+    track.style.transform = `translateX(${translateX}px)`;
+
+    // Mettre le centre en avant et flouter les autres
+    cards.forEach((card, index) => {
+        if(index === currentSlide){
+            card.classList.add('center');
+        } else {
+            card.classList.remove('center');
+        }
+    });
+}
+
+// Fonctions de navigation
+function nextSlide() {
+    if (currentSlide < cards.length - 1) {
+        currentSlide++;
+        updateSlider();
+    }
+}
+
+function prevSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlider();
+    }
+}
+
+// Événements pour les flèches en haut
+nextBtn.addEventListener("click", nextSlide);
+prevBtn.addEventListener("click", prevSlide);
+
+window.addEventListener("resize", updateSlider);
+window.addEventListener("DOMContentLoaded", updateSlider);
+
+/* PARTICULES */
+function createSparkles() {
+    const container = document.getElementById('sparklesContainer');
+    const sparkleCount = 30;
+    for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        const size = Math.random() * 25 + 5;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.top = `${Math.random() * 100}%`;
+        sparkle.style.animationDelay = `${Math.random() * 4}s`;
+        container.appendChild(sparkle);
+    }
+}
+window.addEventListener('DOMContentLoaded', createSparkles);
+</script>
+
+<!-- SECTION BOOKING -->
+<section class="booking-section" id="bookingSection">
+    <div class="booking-container">
+        <h2 class="booking-title">
+            <span class="booking-title-gold">Looking for a professional team specialized in photography, videography, and visual production to capture your most precious memories?</span>
+        </h2>
+        <p class="booking-second-phrase">
+            Book today and secure the services of the expert team at Gloria d'Or Visuals.
+        </p>
+        <div class="booking-buttons">
+            <button class="booking-btn btn-packages">Packages</button>
+            <button class="booking-btn btn-book-now">Book Now</button>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

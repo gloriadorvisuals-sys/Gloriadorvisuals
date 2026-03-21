@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who are we</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: default;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(192, 123, 23, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 20%, rgba(234, 177, 86, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.03) 0%, transparent 30%);
+        }
+
+        /* SECTION UNIQUE - HAUTEUR 100VH COMME LA PREMIÈRE PAGE */
+        .full-height-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+           
+            border-image: linear-gradient(45deg, #c07b17, #eab156, #ffd700, #eab156, #c07b17) 1;
+            position: relative;
+            box-sizing: border-box;
+margin-top: 30px;
+margin-bottom: 30px;
+        }
+
+        /* Ajout d'un effet de brillance sur le cadre */
+        .full-height-section::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent 20%, 
+                rgba(192, 123, 23, 0.1) 40%, 
+                rgba(234, 177, 86, 0.2) 50%,
+                rgba(192, 123, 23, 0.1) 60%,
+                transparent 80%);
+            z-index: -1;
+            animation: borderGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Particules brillantes en fond */
+        .sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(234, 177, 86, 0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: sparkleFloat 4s infinite ease-in-out;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { 
+                opacity: 0; 
+                transform: translateY(0) scale(0.5);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(1);
+            }
+        }
+
+        .section-container {
+            width: 90%;
+            max-width: 1600px;
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* COLONNE GAUCHE - IPHONE REDIMENSIONNÉ */
+        .phone-column {
+            flex: 0 0 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 100%;
+        }
+
+        /* CADRE IPHONE AVEC BORDURE DORÉE */
+        @keyframes slideFadeInLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .iphone-frame {
+            position: relative;
+            width: 270px;
+        height: 420px;
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 
+                0 20px 60px rgba(192, 123, 23, 0.4),
+                0 0 0 2px rgba(234, 177, 86, 0.3),
+                0 0 40px rgba(234, 177, 86, 0.3),
+                inset 0 0 20px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(234, 177, 86, 0.2);
+            animation: slideFadeInLeft 1.2s ease-out forwards;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.9),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        /* VIDÉO DANS L'IPHONE */
+        .iphone-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 32px;
+        }
+
+        /* FOND DE SECOURS */
+        .video-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(192, 123, 23, 0.1) 0%, 
+                rgba(234, 177, 86, 0.15) 50%, 
+                rgba(192, 123, 23, 0.1) 100%);
+            border-radius: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .fallback-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #eab156;
+        }
+
+        .fallback-text {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .fallback-text span {
+            color: #eab156;
+            font-weight: 500;
+        }
+
+        /* NOTCH */
+        .iphone-notch {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 20px;
+            background: linear-gradient(145deg, #0a0a0a, #000);
+            border-radius: 0 0 12px 12px;
+            z-index: 3;
+            border: 1px solid rgba(234, 177, 86, 0.1);
+        }
+
+        /* COLONNE DROITE - CONTENU */
+        .text-column {
+            flex: 1;
+            padding: 20px 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* TITRE PRINCIPAL - TAILLE RÉDUITE */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .title-gold {
+            background: linear-gradient(90deg, #c07b17 0%, #eab156 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: -6px;
+        }
+
+        .title-white {
+            color: #ffffff;
+            font-size: 2rem;
+        }
+
+        /* DESCRIPTION PRINCIPALE - TAILLE RÉDUITE */
+        .main-description {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            font-weight: 300;
+            max-width: 690px;
+        }
+
+        .highlight-gold {
+            color: #eab156;
+            font-weight: 500;
+        }
+
+        /* GRID DES SERVICES - 3 COLONNES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Scrollbar personnalisée */
+        .services-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .services-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .services-grid::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #c07b17, #eab156);
+            border-radius: 10px;
+        }
+
+        /* CADRE DES SERVICES AVEC BORDURE DORÉE */
+        .service-card {
+            background: rgba(25, 25, 25, 0.7);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid rgba(192, 123, 23, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(234, 177, 86, 0.1), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            border-color: rgba(234, 177, 86, 0.6);
+            
+            box-shadow: 0 10px 30px rgba(192, 123, 23, 0.2);
+        }
+
+        .service-title {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #eab156;
+            letter-spacing: 0.5px;
+        }
+
+        .service-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1400px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            
+            .iphone-frame {
+                width: 240px;
+                height: 480px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .title-white {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .section-container {
+                gap: 40px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .iphone-frame {
+                width: 220px;
+                height: 440px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .title-white {
+                font-size: 1.6rem;
+            }
+            
+            .main-description {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .section-container {
+                flex-direction: column;
+                height: auto;
+                padding: 60px 0;
+                gap: 30px;
+            }
+            
+            .phone-column {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 320px;
+                height: auto;
+            }
+            
+            .text-column {
+                width: 100%;
+                text-align: center;
+                align-items: center;
+            }
+            
+            .main-description {
+                text-align: center;
+                max-width: 800px;
+            }
+            
+            .services-grid {
+                max-height: none;
+                overflow-y: visible;
+                grid-template-columns: repeat(3, 1fr);
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .title-white {
+                font-size: 1.5rem;
+            }
+            
+            .main-description {
+                font-size: 0.85rem;
+                padding: 0 15px;
+                margin-bottom: 20px;
+            }
+            
+            .services-grid {
+                gap: 10px;
+                padding: 0 10px;
+            }
+            
+            .iphone-frame {
+                width: 200px;
+                height: 400px;
+            }
+            
+            .fallback-text {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            
+            .service-card {
+                padding: 15px;
+            }
+            
+            .service-title {
+                font-size: 0.9rem;
+            }
+            
+            .service-description {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .title-white {
+                font-size: 1.3rem;
+            }
+            
+            .main-description {
+                font-size: 0.8rem;
+            }
+            
+            .service-card {
+                padding: 12px;
+            }
+            
+            .service-title {
+                font-size: 0.85rem;
+            }
+            
+            .service-description {
+                font-size: 0.75rem;
+            }
+            
+            .iphone-frame {
+                width: 180px;
+                height: 360px;
+                border-radius: 30px;
+            }
+            
+            .iphone-screen {
+                border-radius: 25px;
+            }
+            
+            .fallback-icon {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* POUR LES TRÈS GRANDS ÉCRANS */
+        @media (min-width: 1600px) {
+            .iphone-frame {
+                width: 300px;
+                height: 600px;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .title-white {
+                font-size: 2.4rem;
+            }
+            
+            .main-description {
+                font-size: 1.1rem;
+                max-width: 700px;
+            }
+            
+            .services-grid {
+                gap: 20px;
+            }
+            
+            .service-title {
+                font-size: 1rem;
+            }
+            
+            .service-description {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    
+    <!-- Polices Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Icônes Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- SECTION UNIQUE PLEINE HAUTEUR -->
+    <section class="full-height-section" id="visionSection">
+        <!-- Particules brillantes -->
+        <div class="sparkles" id="sparklesContainer"></div>
+        
+        <div class="section-container">
+            <!-- COLONNE GAUCHE - IPHONE -->
+            <div class="phone-column">
+                <div class="iphone-frame">
+                    <div class="iphone-notch"></div>
+                    
+                    <div class="iphone-screen">
+                        <video class="iphone-video" autoplay loop muted playsinline>
+                            <source src="vid.mp4" type="video/mp4">
+                            <source src="vid.webm" type="video/webm">
+                            Votre navigateur ne supporte pas la vidéo.
+                        </video>
+                        
+                        <div class="video-fallback" id="videoFallback">
+                            <div class="fallback-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="fallback-text">
+                                <span>Gloria d'Or Visuals</span><br>
+                                Capturing timeless moments with elegance and passion
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COLONNE DROITE - CONTENU -->
+            <div class="text-column">
+                <!-- Titre principal -->
+                <h1 class="section-title">
+                    <span class="title-gold">Who are we?</span>
+                    <span class="title-white">Gloria d'Or</span>
+                </h1>
+                
+                <!-- Description principale -->
+                <div class="main-description">
+                    <span class="highlight-gold">At Gloria d'Or Visuals</span>, we capture far more than images — we create memories filled with emotion, elegance, <BR>and authenticity.<br><br>
+                    
+                    Specializing in high-end wedding and event photography and videography, we tell your story through cinematic and timeless visuals.
+               <BR>We also offer multi-camera video production through <span class="highlight-gold">Gloria d'Or Visuals</span> , providing professional broadcast-style coverage of events and creating true television-quality content.
+               
+                </div>
+                
+                <!-- Grid des services - 3 COLONNES -->
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3 class="service-title">WEDDINGS</h3>
+                        <p class="service-description">
+                            Luminous photographs and cinematic films that capture every emotion of your special day.
+                        </p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3 class="service-title">EVENTS</h3>
+                        <p class="service-description">
+                            Elegant and professional coverage of private, corporate, and conference events.
+                        </p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3 class="service-title">PHOTOGRAPHY & VIDEOGRAPHY</h3>
+                        <p class="service-description">
+                            Comprehensive services with a modern, refined, and emotional style.
+                        </p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3 class="service-title">WEDDING PACKAGES</h3>
+                        <p class="service-description">
+                            Silver, Gold, and Royal packages with customizable options.
+                        </p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3 class="service-title">AERIAL SHOOTING</h3>
+                        <p class="service-description">
+                            Premium aerial imagery captured by drone for a modern perspective.
+                        </p>
+                    </div>
+                    
+                    <div class="service-card">
+                        <h3 class="service-title">PRINTED MEDIA</h3>
+                        <p class="service-description">
+                            High-end PhotoBooks and custom prints to preserve your memories.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // CRÉATION DES PARTICULES BRILLANTES
+        function createSparkles() {
+            const container = document.getElementById('sparklesContainer');
+            if (!container) return;
+            
+            // Nombre de particules
+            const sparkleCount = 15;
+            
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                
+                // Taille aléatoire
+                const size = Math.random() * 40 + 10;
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                
+                // Position aléatoire
+                sparkle.style.left = `${Math.random() * 100}%`;
+                sparkle.style.top = `${Math.random() * 100}%`;
+                
+                // Délai d'animation aléatoire
+                sparkle.style.animationDelay = `${Math.random() * 4}s`;
+                
+                container.appendChild(sparkle);
+            }
+        }
+
+        // GESTION DE LA VIDÉO ET FALLBACK
+        function initVideo() {
+            const video = document.querySelector('.iphone-video');
+            const fallback = document.getElementById('videoFallback');
+            
+            if (video) {
+                fallback.style.display = 'none';
+                
+                const playVideo = () => {
+                    video.play().then(() => {
+                        fallback.style.display = 'none';
+                    }).catch(error => {
+                        setTimeout(() => {
+                            if (video.paused) {
+                                fallback.style.display = 'flex';
+                            }
+                        }, 2000);
+                    });
+                };
+                
+                if (video.readyState >= 3) {
+                    playVideo();
+                } else {
+                    video.addEventListener('loadeddata', playVideo);
+                    video.addEventListener('canplay', playVideo);
+                }
+                
+                video.addEventListener('error', () => {
+                    fallback.style.display = 'flex';
+                });
+                
+                video.addEventListener('timeupdate', () => {
+                    if (video.currentTime === 0 && video.readyState >= 4) {
+                        setTimeout(() => {
+                            if (video.currentTime === 0) {
+                                fallback.style.display = 'flex';
+                            }
+                        }, 3000);
+                    }
+                });
+            }
+        }
+        
+        // CHANGER LE FALLBACK DYNAMIQUEMENT
+        function updateFallbackContent() {
+            const fallback = document.getElementById('videoFallback');
+            if (!fallback) return;
+            
+            const texts = [
+                {
+                    icon: "fas fa-heart",
+                    text: "<span>Love Stories</span><br>Captured with elegance and emotion"
+                },
+                {
+                    icon: "fas fa-camera",
+                    text: "<span>Timeless Moments</span><br>Preserved through artistic vision"
+                },
+                {
+                    icon: "fas fa-video",
+                    text: "<span>Cinematic Excellence</span><br>Every frame tells your story"
+                },
+                {
+                    icon: "fas fa-ring",
+                    text: "<span>Wedding Magic</span><br>Transforming moments into memories"
+                }
+            ];
+            
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                if (!fallback || fallback.style.display === 'none') return;
+                
+                currentIndex = (currentIndex + 1) % texts.length;
+                const iconEl = fallback.querySelector('.fallback-icon');
+                const textEl = fallback.querySelector('.fallback-text');
+                
+                if (iconEl && textEl) {
+                    iconEl.innerHTML = `<i class="${texts[currentIndex].icon}"></i>`;
+                    textEl.innerHTML = texts[currentIndex].text;
+                }
+            }, 5000);
+        }
+        
+        // INITIALISATION
+        window.addEventListener('DOMContentLoaded', () => {
+            createSparkles();
+            initVideo();
+            updateFallbackContent();
+            
+            setTimeout(() => {
+                const video = document.querySelector('.iphone-video');
+                const fallback = document.getElementById('videoFallback');
+                
+                if (video && (video.paused || video.readyState < 3)) {
+                    fallback.style.display = 'flex';
+                }
+            }, 3000);
+        });
+        
+        // Ajustement de la hauteur responsive
+        function adjustHeight() {
+            const section = document.querySelector('.full-height-section');
+            if (window.innerWidth <= 1024) {
+                section.style.height = 'auto';
+                section.style.minHeight = '100vh';
+            } else {
+                section.style.height = '100vh';
+                section.style.minHeight = 'auto';
+            }
+        }
+        
+        window.addEventListener('load', adjustHeight);
+        window.addEventListener('resize', adjustHeight);
+        
+        // Ajustement du grid responsive
+        function adjustGridColumns() {
+            const grid = document.querySelector('.services-grid');
+            if (!grid) return;
+            
+            const width = window.innerWidth;
+            
+            if (width <= 480) {
+                grid.style.gridTemplateColumns = '1fr';
+            } else if (width <= 768) {
+                grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            } else if (width <= 1200) {
+                grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            } else {
+                grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+            }
+        }
+        
+        window.addEventListener('resize', adjustGridColumns);
+        window.addEventListener('load', adjustGridColumns);
+    </script>
+
+    <!-- SECTION BOOKING -->
+    <section class="booking-section" id="bookingSection">
+        <div class="booking-container">
+            <h2 class="booking-title">
+                <span class="booking-title-gold">Looking for a professional team specialized in photography, videography, and visual production to capture your most precious memories?</span>
+            </h2>
+            <p class="booking-second-phrase">
+                Book today and secure the services of the expert team at Gloria d'Or Visuals.
+            </p>
+            <div class="booking-buttons">
+                <button class="booking-btn btn-packages">Packages</button>
+                <button class="booking-btn btn-book-now">Book Now</button>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
