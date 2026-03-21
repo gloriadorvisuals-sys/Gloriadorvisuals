@@ -1644,6 +1644,168 @@
     .hero-photo-s1 { width: 130px; height: 165px; }
     .hero-photo-s2 { width: 105px; height: 130px; }
     .hero-stat-number { font-size: 1.7rem; }
+
+}
+
+/* ================================================
+   TESTIMONIALS SECTION (uniquement photos)
+   ================================================ */
+.testimonials-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('Couverture section web.png') center/cover no-repeat fixed;
+    padding: 80px 20px;
+    z-index: 2;
+}
+
+.testimonials-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.testimonials-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.testimonials-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.title-gold-testimonials {
+    background: linear-gradient(90deg, #c07b17 0%, #eab156 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+
+.title-white-testimonials {
+    color: #ffffff;
+    font-size: 1.8rem;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    justify-items: center;
+    align-items: center;
+}
+
+.testimonial-photo {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid rgba(192,123,23,0.4);
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    background: rgba(15,15,15,0.3);
+}
+
+.testimonial-photo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(234,177,86,0.2) 0%, transparent 60%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.testimonial-photo:hover {
+    transform: translateY(-8px);
+    border-color: rgba(234,177,86,0.8);
+    box-shadow: 0 25px 45px rgba(192,123,23,0.25);
+}
+
+.testimonial-photo:hover::before {
+    opacity: 1;
+}
+
+.testimonial-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.testimonial-photo:hover img {
+    transform: scale(1.03);
+}
+
+/* Responsive Tablette */
+@media (max-width: 1024px) {
+    .testimonials-section {
+        padding: 60px 20px;
+        background-attachment: scroll;
+    }
+    .testimonials-title {
+        font-size: 2rem;
+    }
+    .title-white-testimonials {
+        font-size: 1.5rem;
+    }
+    .testimonials-grid {
+        gap: 30px;
+    }
+    .testimonial-photo {
+        max-width: 280px;
+    }
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .testimonials-section {
+        padding: 50px 15px;
+    }
+    .testimonials-title {
+        font-size: 1.7rem;
+    }
+    .title-white-testimonials {
+        font-size: 1.3rem;
+    }
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .testimonial-photo {
+        max-width: 260px;
+    }
+}
+
+/* Très petits mobiles */
+@media (max-width: 480px) {
+    .testimonials-section {
+        padding: 40px 12px;
+    }
+    .testimonials-title {
+        font-size: 1.5rem;
+    }
+    .title-white-testimonials {
+        font-size: 1.1rem;
+    }
+    .testimonial-photo {
+        max-width: 220px;
+    }
 }
     </style>
 
@@ -2478,8 +2640,36 @@
                 </form>
             </div>
         </div>
+        
     </section>
+<!-- ================================================
+     TESTIMONIALS SECTION (uniquement photos)
+     ================================================ -->
+<section class="testimonials-section">
+    <div class="testimonials-wrapper">
+        <div class="testimonials-header">
+            <h2 class="testimonials-title">
+                <span class="title-gold-testimonials">What do they say about us?</span>
+                <span class="title-white-testimonials">Gloria d'Or Testimonials</span>
+            </h2>
+        </div>
 
+        <div class="testimonials-grid">
+            <!-- Maria photo -->
+            <div class="testimonial-photo">
+                <img src="maria.png" alt="Maria">
+            </div>
+            <!-- Khawla photo -->
+            <div class="testimonial-photo">
+                <img src="khawla.png" alt="Khawla">
+            </div>
+            <!-- Meryem photo -->
+            <div class="testimonial-photo">
+                <img src="meryem.png" alt="Meryem">
+            </div>
+        </div>
+    </div>
+</section>
 <script>
 // WHO-WE-ARE SECTION SCRIPT
 function createSparklesWhoWeAre() {
