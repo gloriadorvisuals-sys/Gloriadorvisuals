@@ -1395,7 +1395,7 @@
             rgba(234,177,86,0.08) 60%,
             rgba(0,0,0,0.6) 100%
         ),
-        url('galerie11.png') center/cover no-repeat;
+        url('galerie1.png') center/cover no-repeat;
     border-radius: 16px;
 }
 
@@ -1909,7 +1909,7 @@
                 <div class="track-wrapper" id="galleryTrack">
                     <ul class="track" id="imageTrack">
                         <li class="track__item large">
-                            <img src="galerie11.png" alt="Timeless Beauty">
+                            <img src="galerie1.png" alt="Timeless Beauty">
                             <div class="image-overlay">
                                 <h3 class="image-title">Timeless Beauty</h3>
                                 <p class="image-subtitle">Mariage classique éternel avec un portrait intime du couple</p>
@@ -2048,11 +2048,87 @@
 </div>
 
 <script>
-    // === GOLD PARTICLES (réduites sur mobile pour performance)
+       // === GOLD PARTICLES (réduites sur mobile pour performance)
     const goldContainer = document.getElementById('goldDust');
     let isMobile = window.innerWidth <= 768;
     let particleCount = isMobile ? 30 : 100;
     let starCount = isMobile ? 15 : 50;
+
+    
+
+    // === BURGER MENU === (conserver)
+    // === DESKTOP NAV === (conserver)
+    // === GALLERY BTN → scroll === (conserver)
+    // === BOOK NOW → scroll === (conserver)
+    // === SEE PACKS === (conserver)
+    // === FULLSCREEN === (conserver)
+    // === MUSIC === (conserver)
+    // === GALLERY SCROLL === (conserver)
+
+    const flashStyle = document.createElement('style');
+    flashStyle.textContent = '@keyframes flashEffect{0%{opacity:0;transform:scale(0.5)}50%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.2)}}';
+    document.head.appendChild(flashStyle);
+
+    // ============================================
+    // WHO-WE-ARE SECTION SCRIPT (conserver)
+    // ============================================
+
+    // ============================================
+    // WEDDING PACKS SECTION SCRIPT (conserver)
+    // ============================================
+
+    // ============================================
+    // TESTIMONIALS AND BOOKING SCRIPT — déplacé dans DOMContentLoaded
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // ... tout ce qui était déjà dans DOMContentLoaded (createSparklesWhoWeAre, etc.) ...
+
+        // Ajouter ici tout le code des témoignages
+        const trackTestimonials = document.getElementById("sliderTrackTestimonials");
+        const cardsTestimonials = document.querySelectorAll(".testimonials-section .testimonial-image-card");
+        const prevBtnTestimonials = document.getElementById("prevBtnTestimonials");
+        const nextBtnTestimonials = document.getElementById("nextBtnTestimonials");
+
+        let currentSlideTestimonials = 2;
+
+        function updateSliderTestimonials() {
+            if (cardsTestimonials.length === 0) return;
+            const cardWidth = cardsTestimonials[0].offsetWidth + 20;
+            const translateX = -(currentSlideTestimonials * cardWidth) + (window.innerWidth / 2 - cardWidth / 2);
+            trackTestimonials.style.transform = `translateX(${translateX}px)`;
+            cardsTestimonials.forEach((card, index) => {
+                if (index === currentSlideTestimonials) {
+                    card.classList.add('center');
+                } else {
+                    card.classList.remove('center');
+                }
+            });
+        }
+
+        if (nextBtnTestimonials) {
+            nextBtnTestimonials.addEventListener("click", () => {
+                if (currentSlideTestimonials < cardsTestimonials.length - 1) {
+                    currentSlideTestimonials++;
+                    updateSliderTestimonials();
+                }
+            });
+        }
+
+        if (prevBtnTestimonials) {
+            prevBtnTestimonials.addEventListener("click", () => {
+                if (currentSlideTestimonials > 0) {
+                    currentSlideTestimonials--;
+                    updateSliderTestimonials();
+                }
+            });
+        }
+
+        window.addEventListener("resize", updateSliderTestimonials);
+        updateSliderTestimonials();
+
+        // ... le reste du code du DOMContentLoaded (packCards, bookingForm, etc.) ...
+    });
+    
 
     function createRandomParticle(c) {
         const p = document.createElement('div');
