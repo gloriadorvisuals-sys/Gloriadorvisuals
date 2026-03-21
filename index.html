@@ -975,8 +975,7 @@
             .contact-method { min-width: 100%; }
             .submit-btn { width: 100%; padding: 12px; }
 
-            /* Testimonials section mobile — réduire espace haut/bas */
-            .testimonials-section { min-height: auto; padding: 30px 0 40px; }
+        
             .testimonials-title h2 { font-size: 1.6rem; }
             .testimonials-title p { font-size: 1.2rem; }
             .testimonial-image-card { flex: 0 0 130px; }
@@ -1139,20 +1138,7 @@
         .services-list li::before { content: '✦'; position: absolute; left: 0; color: #eab156; font-weight: bold; font-size: 0.9rem; transition: all 0.3s ease; }
         .services-list li:hover::before { transform: scale(1.2); color: #ffd700; }
 
-        /* TESTIMONIALS AND BOOKING SECTION STYLES (inchangé) */
-        .testimonials-section { position: relative; width: 100%; min-height: 100vh; overflow: hidden; display: flex; padding-top: 20px; padding-bottom: 90px; align-items: center; justify-content: center; background: radial-gradient(circle at 20% 80%, rgba(192,123,23,0.05) 0%, transparent 20%), radial-gradient(circle at 80% 20%, rgba(234,177,86,0.05) 0%, transparent 20%), radial-gradient(circle at 40% 40%, rgba(255,215,0,0.03) 0%, transparent 30%); }
-        .testimonials-section::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(45deg, transparent 20%, rgba(192, 123, 23, 0.1) 40%, rgba(234, 177, 86, 0.2) 50%, rgba(192, 123, 23, 0.1) 60%, transparent 80%); z-index: 1; animation: borderGlow 4s ease-in-out infinite; }
-        .testimonials-section .sparkles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
-        .testimonials-section .sparkle { position: absolute; background: radial-gradient(circle, rgba(234, 177, 86, 0.6) 0%, transparent 70%); border-radius: 50%; animation: sparkleFloat 4s infinite ease-in-out; }
-        .testimonials-wrapper { position: relative; width: 100%; max-width: 1400px; padding: 0 40px; display: flex; flex-direction: column; gap: 10px; z-index: 3; }
-        .testimonials-title { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px; position: relative; }
-        .testimonials-title h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; background: linear-gradient(90deg, #c07b17, #eab156); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; text-align: center; }
-        .testimonials-title p { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fff; text-align: center; }
-        .testimonials-slider { position: relative; width: 100%; display: flex; align-items: center; justify-content: center; }
-        .testimonial-image-card { position: relative; flex: 0 0 220px; display: flex; align-items: center; justify-content: center; transition: all 0.5s ease; filter: blur(4px); opacity: 0.6; }
-        .testimonial-image-card.center { filter: blur(0); opacity: 1; }
-        .testimonial-image-card img { width: 100%; height: auto; object-fit: contain; border-radius: 14px; }
-
+      
         .booking-section { position: relative; width: 100%; min-height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 20% 80%, rgba(192,123,23,0.05) 0%, transparent 20%), radial-gradient(circle at 80% 20%, rgba(234,177,86,0.05) 0%, transparent 20%), radial-gradient(circle at 40% 40%, rgba(255,215,0,0.03) 0%, transparent 30%); padding-top: 30px; padding-bottom: 30px; }
         .booking-section::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(45deg, transparent 20%, rgba(192, 123, 23, 0.1) 40%, rgba(234, 177, 86, 0.2) 50%, rgba(192, 123, 23, 0.1) 60%, transparent 80%); z-index: 1; animation: borderGlow 4s ease-in-out infinite; }
         .booking-section .sparkles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
@@ -2639,11 +2625,7 @@ function createSparklesPacks() {
     }
 }
 
-// TESTIMONIALS AND BOOKING SCRIPT
-const trackTestimonials = document.getElementById("sliderTrackTestimonials");
-const cardsTestimonials = document.querySelectorAll(".testimonials-section .testimonial-image-card");
-const prevBtnTestimonials = document.getElementById("prevBtnTestimonials");
-const nextBtnTestimonials = document.getElementById("nextBtnTestimonials");
+
 
 let currentSlideTestimonials = 2;
 
@@ -3015,31 +2997,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<section class="testimonials-section" id="testimonialsSection">
-    <div class="sparkles" id="sparklesContainer1"></div>
-    <div class="testimonials-wrapper">
-        <div class="testimonials-title">
-            <div>
-                <h2>What do they say about us?</h2>
-                <p>Gloria d'Or Testimonials</p>
-            </div>
-            <div class="slider-controls">
-                <button class="slider-btn" id="prevBtnTestimonials">&#10094;</button>
-                <button class="slider-btn" id="nextBtnTestimonials">&#10095;</button>
-            </div>
-        </div>
-        <div class="testimonials-slider">
-            <div class="slider-track-container">
-                <div class="slider-track" id="sliderTrackTestimonials">
-                    <div class="testimonial-image-card"><img src="maria.png" class="testimonial-image"></div>
-                    <div class="testimonial-image-card"><img src="khawla.png" class="testimonial-image"></div>
-                    <div class="testimonial-image-card center"><img src="meryem.png" class="testimonial-image"></div>
-                    <div class="testimonial-image-card"><img src="maria.png" class="testimonial-image"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 </body>
 </html>
