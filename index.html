@@ -1266,6 +1266,16 @@
         }
 
         @media (max-width: 768px) {
+              .section-container {
+        flex-direction: column;   /* au lieu de column-reverse */
+    }
+    .text-column {
+        order: 1;   /* le texte passe en premier */
+    }
+    .phone-column {
+        order: 2;   /* l’iPhone passe en second */
+    }
+    
             .wedding-packs-wrapper { padding: 0 20px; }
             .main-title { font-size: 1.8rem; }
             .sub-title { font-size: 1.5rem; }
