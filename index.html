@@ -15,7 +15,7 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 160;
-    width: 400px;   /* ← agrandi de 300px à 400px */
+    width: 400px;
     opacity: 0;
     pointer-events: none;
     animation: hgfAppear 1.2s cubic-bezier(0.16,1,0.3,1) forwards 0.4s;
@@ -30,8 +30,8 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 520px;   /* ← ajusté pour accompagner l'agrandissement */
-    height: 560px;  /* ← ajusté pour accompagner l'agrandissement */
+    width: 520px;
+    height: 560px;
     background: radial-gradient(ellipse,
         rgba(192,123,23,0.25) 0%,
         rgba(234,177,86,0.08) 45%,
@@ -53,7 +53,7 @@
 }
 
 @media (min-width: 1600px) {
-    .hero-gold-frame-wrap { left: 5%; width: 480px; }  /* ← encore plus grand sur très grand écran */
+    .hero-gold-frame-wrap { left: 5%; width: 480px; }
 }
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -642,7 +642,7 @@
         .gallery-header { text-align: center; margin-bottom: 40px; padding: 0 20px; }
         .gallery-title-container { display: flex; align-items: center; justify-content: center; gap: 40px; margin-bottom: 15px; flex-wrap: wrap; }
         .gallery-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; line-height: 1.2; margin: 0; display: flex; flex-direction: column; align-items: flex-start; }
-        .title-gold-gallery { background: linear-gradient(90deg, #c07b17 0%, #eab156 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: -6px; z-index: 9999; }
+        .title-gold-gallery { background: linear-gradient(90deg, #c07b17 0%, #eab156 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: -6px; }
         .title-white-gallery { color: #ffffff; font-size: 2rem; }
         .gallery-title-btn { display: flex; align-items: center; justify-content: center; }
         .gallery-title-btn button {
@@ -850,18 +850,27 @@
             .see-packs-btn { display: none; }
             .gallery-btn { display: none; }
             .social-sidebar { display: none; }
-            .drone-photo { display: none; }
             .circle-background-effects { display: none; }
 
             /* HOME SECTION MOBILE — correction centrage et chevauchements */
             .home-section { height: 100vh; min-height: 100vh; overflow: hidden; }
-            .logo { width: 140px; top: 20px; left: 16px; z-index: 210; }
+            .logo { width: 170px; top: 20px; left: 16px; z-index: 210; } /* logo agrandi */
 
             .right-section {
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 0;
                 width: 100%; height: 100%;
                 opacity: 0.25;
+            }
+
+            /* drone visible sur mobile */
+            .drone-photo {
+                display: block;
+                width: 120px;
+                top: 70px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 150;
             }
 
             .rotating-gallery-container {
@@ -914,12 +923,12 @@
             .scroll-btn { width: 34px; height: 34px; font-size: 0.9rem; border-width: 1.5px; }
             .size-btn { padding: 5px 12px; font-size: 0.7rem; border-radius: 20px; }
 
-            /* WHO WE ARE section mobile */
+            /* WHO WE ARE section mobile — titre au-dessus de l'iphone */
             .full-height-section { height: auto; min-height: auto; margin: 40px 0; padding: 20px 0; }
-            .section-container { flex-direction: column; gap: 30px; padding: 0 20px; }
+            .section-container { flex-direction: column-reverse; gap: 30px; padding: 0 20px; } /* inversé pour titre en haut */
             .phone-column { max-width: 260px; margin: 0 auto; }
             .iphone-frame { width: 200px; height: 400px; margin: 0 auto; }
-            .text-column { text-align: center; width: 100%; }
+            .text-column { text-align: center; width: 100%; order: 1; } /* le texte passe en premier */
             .section-title { font-size: 1.8rem; text-align: center; }
             .title-white { font-size: 1.4rem; }
             .main-description { font-size: 0.85rem; padding: 0 8px; text-align: center; max-width: 100%; }
@@ -956,8 +965,8 @@
             .contact-method { min-width: 100%; }
             .submit-btn { width: 100%; padding: 12px; }
 
-            /* Testimonials section mobile */
-            .testimonials-section { min-height: auto; padding: 40px 0 60px; }
+            /* Testimonials section mobile — réduire espace haut/bas */
+            .testimonials-section { min-height: auto; padding: 30px 0 40px; }
             .testimonials-title h2 { font-size: 1.6rem; }
             .testimonials-title p { font-size: 1.2rem; }
             .testimonial-image-card { flex: 0 0 130px; }
@@ -965,7 +974,8 @@
 
         /* PETITS MOBILES (max-width: 480px) — réglages fins */
         @media (max-width: 480px) {
-            .logo { width: 110px; top: 14px; left: 12px; }
+            .logo { width: 150px; top: 14px; left: 12px; }
+            .drone-photo { width: 100px; top: 60px; }
             .rotating-gallery { --s: 220px; --d: 18s; }
             .rotating-gallery-container { top: 38%; }
             .hero-text-container { bottom: 85px; width: 94%; }
@@ -2038,8 +2048,12 @@
 </div>
 
 <script>
-    // === GOLD PARTICLES ===
+    // === GOLD PARTICLES (réduites sur mobile pour performance)
     const goldContainer = document.getElementById('goldDust');
+    let isMobile = window.innerWidth <= 768;
+    let particleCount = isMobile ? 30 : 100;
+    let starCount = isMobile ? 15 : 50;
+
     function createRandomParticle(c) {
         const p = document.createElement('div');
         p.classList.add('gold-particle', ['small','medium','large'][Math.floor(Math.random()*3)]);
@@ -2065,8 +2079,8 @@
         setTimeout(() => { s.remove(); createStar(c); }, dur*1000);
     }
     window.addEventListener('load', () => {
-        for (let i = 0; i < 100; i++) createRandomParticle(goldContainer);
-        for (let i = 0; i < 50; i++) createStar(goldContainer);
+        for (let i = 0; i < particleCount; i++) createRandomParticle(goldContainer);
+        for (let i = 0; i < starCount; i++) createStar(goldContainer);
         document.querySelectorAll('.sparkle').forEach(s => {
             setInterval(() => { s.style.transform = `scale(${0.8+Math.random()*0.4})`; s.style.opacity = 0.2+Math.random()*0.6; }, 2000+Math.random()*3000);
         });
@@ -2465,7 +2479,7 @@
 function createSparklesWhoWeAre() {
     const container = document.getElementById('sparklesContainer');
     if (!container) return;
-    const sparkleCount = 15;
+    const sparkleCount = window.innerWidth <= 768 ? 8 : 15;
     for (let i = 0; i < sparkleCount; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
@@ -2557,6 +2571,7 @@ if (videoPacks) {
 }
 
 function updateSliderPacks() {
+    if (cardsPacks.length === 0) return;
     const cardWidth = cardsPacks[0].offsetWidth + 30;
     const translateX = -(currentSlidePacks * cardWidth) + (window.innerWidth/2 - cardWidth/2);
     trackPacks.style.transform = `translateX(${translateX}px)`;
@@ -2583,13 +2598,14 @@ function prevSlidePacks() {
     }
 }
 
-nextBtnPacks.addEventListener("click", nextSlidePacks);
-prevBtnPacks.addEventListener("click", prevSlidePacks);
+if (nextBtnPacks) nextBtnPacks.addEventListener("click", nextSlidePacks);
+if (prevBtnPacks) prevBtnPacks.addEventListener("click", prevSlidePacks);
 window.addEventListener("resize", updateSliderPacks);
 
 function createSparklesPacks() {
     const container = document.getElementById('sparklesContainer3');
-    const sparkleCount = 30;
+    if (!container) return;
+    const sparkleCount = window.innerWidth <= 768 ? 15 : 30;
     for (let i = 0; i < sparkleCount; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
@@ -2612,6 +2628,7 @@ const nextBtnTestimonials = document.getElementById("nextBtnTestimonials");
 let currentSlideTestimonials = 2;
 
 function updateSliderTestimonials() {
+    if (cardsTestimonials.length === 0) return;
     const cardWidth = cardsTestimonials[0].offsetWidth + 20;
     const translateX = -(currentSlideTestimonials * cardWidth) + (window.innerWidth/2 - cardWidth/2);
     trackTestimonials.style.transform = `translateX(${translateX}px)`;
@@ -2624,26 +2641,31 @@ function updateSliderTestimonials() {
     });
 }
 
-nextBtnTestimonials.addEventListener("click", () => {
-    if (currentSlideTestimonials < cardsTestimonials.length - 1) {
-        currentSlideTestimonials++;
-        updateSliderTestimonials();
-    }
-});
+if (nextBtnTestimonials) {
+    nextBtnTestimonials.addEventListener("click", () => {
+        if (currentSlideTestimonials < cardsTestimonials.length - 1) {
+            currentSlideTestimonials++;
+            updateSliderTestimonials();
+        }
+    });
+}
 
-prevBtnTestimonials.addEventListener("click", () => {
-    if (currentSlideTestimonials > 0) {
-        currentSlideTestimonials--;
-        updateSliderTestimonials();
-    }
-});
+if (prevBtnTestimonials) {
+    prevBtnTestimonials.addEventListener("click", () => {
+        if (currentSlideTestimonials > 0) {
+            currentSlideTestimonials--;
+            updateSliderTestimonials();
+        }
+    });
+}
 
 window.addEventListener("resize", updateSliderTestimonials);
 
 function createSparkles(containerId, count = 30) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    for (let i = 0; i < count; i++) {
+    const finalCount = window.innerWidth <= 768 ? Math.floor(count/2) : count;
+    for (let i = 0; i < finalCount; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
         const size = Math.random() * 25 + 5;
@@ -2660,8 +2682,10 @@ document.addEventListener('DOMContentLoaded', function() {
     createSparklesWhoWeAre();
     initVideoWhoWeAre();
     updateFallbackContent();
-    updateSliderPacks();
-    updateSliderTestimonials();
+    setTimeout(() => {
+        updateSliderPacks();
+        updateSliderTestimonials();
+    }, 100);
     createSparklesPacks();
     createSparkles('sparklesContainer1', 30);
     createSparkles('sparklesContainer2', 25);
@@ -2677,13 +2701,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventTypeSelect = document.getElementById('eventType');
     const weddingPacksSection = document.getElementById('weddingPacksSection');
     
-    eventTypeSelect.addEventListener('change', function() {
-        if (this.value === 'wedding') {
-            weddingPacksSection.style.display = 'block';
-        } else {
-            weddingPacksSection.style.display = 'none';
-        }
-    });
+    if (eventTypeSelect) {
+        eventTypeSelect.addEventListener('change', function() {
+            if (this.value === 'wedding') {
+                weddingPacksSection.style.display = 'block';
+            } else {
+                weddingPacksSection.style.display = 'none';
+            }
+        });
+    }
     
     const packCards = document.querySelectorAll('.booking-form .pack-card');
     const packServicesSection = document.getElementById('packServicesSection');
@@ -2712,22 +2738,24 @@ document.addEventListener('DOMContentLoaded', function() {
             packCards.forEach(c => c.classList.remove('selected'));
             this.classList.add('selected');
             const radioInput = this.querySelector('input[type="radio"]');
-            radioInput.checked = true;
+            if (radioInput) radioInput.checked = true;
             
-            const packType = radioInput.value;
+            const packType = radioInput ? radioInput.value : this.getAttribute('data-pack');
             
             // Show services section
-            packServicesSection.classList.add('active');
+            if (packServicesSection) packServicesSection.classList.add('active');
             
             // Update services list
             const packData = packServices[packType];
-            document.getElementById('packServiceTitle').textContent = packData.title;
-            packServicesList.innerHTML = '';
-            packData.services.forEach(service => {
-                const li = document.createElement('li');
-                li.textContent = service;
-                packServicesList.appendChild(li);
-            });
+            if (packData && document.getElementById('packServiceTitle') && packServicesList) {
+                document.getElementById('packServiceTitle').textContent = packData.title;
+                packServicesList.innerHTML = '';
+                packData.services.forEach(service => {
+                    const li = document.createElement('li');
+                    li.textContent = service;
+                    packServicesList.appendChild(li);
+                });
+            }
             
             // Clear custom message if it was filled
             if (customPackMessage) customPackMessage.value = '';
@@ -2741,105 +2769,106 @@ document.addEventListener('DOMContentLoaded', function() {
                 packCards.forEach(c => c.classList.remove('selected'));
                 const radios = document.querySelectorAll('input[name="pack"]');
                 radios.forEach(r => r.checked = false);
-                packServicesSection.classList.remove('active');
-            } else {
-                // Optionally, if empty, we could do nothing
+                if (packServicesSection) packServicesSection.classList.remove('active');
             }
         });
     }
     
-    const showPacksLink = document.getElementById('showPacksLink');
     const packsModal = document.getElementById('packsModal');
     const closeModal = document.getElementById('closeModal');
     
     function openPacksModal() {
-        packsModal.classList.add('active');
+        if (packsModal) packsModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
     
     function closePacksModal() {
-        packsModal.classList.remove('active');
+        if (packsModal) packsModal.classList.remove('active');
         document.body.style.overflow = 'auto';
     }
     
-    if (showPacksLink) {
-        showPacksLink.addEventListener('click', openPacksModal);
-    }
     if (closeModal) {
         closeModal.addEventListener('click', closePacksModal);
     }
-    packsModal.addEventListener('click', function(e) {
-        if (e.target === packsModal) {
-            closePacksModal();
-        }
-    });
+    if (packsModal) {
+        packsModal.addEventListener('click', function(e) {
+            if (e.target === packsModal) {
+                closePacksModal();
+            }
+        });
+    }
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && packsModal.classList.contains('active')) {
+        if (e.key === 'Escape' && packsModal && packsModal.classList.contains('active')) {
             closePacksModal();
         }
     });
     
     const bookingForm = document.getElementById('bookingForm');
-    bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const fullName = document.getElementById('fullName').value;
-        const phone = document.getElementById('phone').value;
-        const email = document.getElementById('email').value;
-        const eventDate = document.getElementById('eventDate').value;
-        const eventLocation = document.getElementById('eventLocation').value;
-        const capacity = document.getElementById('capacity').value;
-        const eventType = document.getElementById('eventType').value;
-        const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
-        
-        if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
-            alert('Please fill in all required fields (*).');
-            return;
-        }
-        if (capacity < 1 || capacity > 1000) {
-            alert('Please enter a valid capacity between 1 and 1000 people.');
-            return;
-        }
-        if (eventType === 'wedding') {
-            const selectedPack = document.querySelector('input[name="pack"]:checked');
-            const customMsg = customPackMessage ? customPackMessage.value.trim() : '';
-            if (!selectedPack && !customMsg) {
-                alert('Please select a standard pack or describe your custom pack requirements.');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventLocation = document.getElementById('eventLocation').value;
+            const capacity = document.getElementById('capacity').value;
+            const eventType = document.getElementById('eventType').value;
+            const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
+            
+            if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
+                alert('Please fill in all required fields (*).');
                 return;
             }
-        }
-        
-        const submitBtn = document.querySelector('.submit-btn');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'Submitted!';
-        submitBtn.style.borderColor = '#28a745';
-        submitBtn.style.animation = 'none';
-        submitBtn.style.boxShadow = '0 5px 20px rgba(40, 167, 69, 0.4)';
-        
-        setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.style.borderColor = 'rgba(192, 123, 23, 0.7)';
-            submitBtn.style.animation = 'pulsePacks 3s infinite';
-            submitBtn.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(192, 123, 23, 0.2)';
-            bookingForm.reset();
-            packCards.forEach(c => c.classList.remove('selected'));
-            weddingPacksSection.style.display = 'none';
-            if (customPackMessage) customPackMessage.value = '';
-            alert('Thank you for your booking request! We will contact you soon via your preferred method.');
-        }, 2000);
-    });
+            if (capacity < 1 || capacity > 1000) {
+                alert('Please enter a valid capacity between 1 and 1000 people.');
+                return;
+            }
+            if (eventType === 'wedding') {
+                const selectedPack = document.querySelector('input[name="pack"]:checked');
+                const customMsg = customPackMessage ? customPackMessage.value.trim() : '';
+                if (!selectedPack && !customMsg) {
+                    alert('Please select a standard pack or describe your custom pack requirements.');
+                    return;
+                }
+            }
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Submitted!';
+            submitBtn.style.borderColor = '#28a745';
+            submitBtn.style.animation = 'none';
+            submitBtn.style.boxShadow = '0 5px 20px rgba(40, 167, 69, 0.4)';
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.borderColor = 'rgba(192, 123, 23, 0.7)';
+                submitBtn.style.animation = 'pulsePacks 3s infinite';
+                submitBtn.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(192, 123, 23, 0.2)';
+                bookingForm.reset();
+                packCards.forEach(c => c.classList.remove('selected'));
+                if (weddingPacksSection) weddingPacksSection.style.display = 'none';
+                if (customPackMessage) customPackMessage.value = '';
+                alert('Thank you for your booking request! We will contact you soon via your preferred method.');
+            }, 2000);
+        });
+    }
     
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById('eventDate').setAttribute('min', today);
+    const eventDateInput = document.getElementById('eventDate');
+    if (eventDateInput) eventDateInput.setAttribute('min', today);
 });
 
 function adjustHeight() {
     const section = document.querySelector('.full-height-section');
-    if (window.innerWidth <= 1024) {
-        section.style.height = 'auto';
-        section.style.minHeight = '100vh';
-    } else {
-        section.style.height = '100vh';
-        section.style.minHeight = 'auto';
+    if (section) {
+        if (window.innerWidth <= 1024) {
+            section.style.height = 'auto';
+            section.style.minHeight = '100vh';
+        } else {
+            section.style.height = '100vh';
+            section.style.minHeight = 'auto';
+        }
     }
 }
 
