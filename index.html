@@ -2315,6 +2315,7 @@ if (bookingForm) {
 
         // Préparer les données (doivent correspondre aux {{...}} du template)
        const templateParams = {
+        title: "Nouvelle demande de réservation",   // <-- à ajouter
     name: fullName,
     fullName: fullName,     // <-- ajoute cette ligne
     phone: phone,
@@ -3133,56 +3134,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    const bookingForm = document.getElementById('bookingForm');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const fullName = document.getElementById('fullName').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const eventDate = document.getElementById('eventDate').value;
-            const eventLocation = document.getElementById('eventLocation').value;
-            const capacity = document.getElementById('capacity').value;
-            const eventType = document.getElementById('eventType').value;
-            const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
-            
-            if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
-                alert('Please fill in all required fields (*).');
-                return;
-            }
-            if (capacity < 1 || capacity > 1000) {
-                alert('Please enter a valid capacity between 1 and 1000 people.');
-                return;
-            }
-            if (eventType === 'wedding') {
-                const selectedPack = document.querySelector('input[name="pack"]:checked');
-                const customMsg = customPackMessage ? customPackMessage.value.trim() : '';
-                if (!selectedPack && !customMsg) {
-                    alert('Please select a standard pack or describe your custom pack requirements.');
-                    return;
-                }
-            }
-            
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = 'Submitted!';
-            submitBtn.style.borderColor = '#28a745';
-            submitBtn.style.animation = 'none';
-            submitBtn.style.boxShadow = '0 5px 20px rgba(40, 167, 69, 0.4)';
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.style.borderColor = 'rgba(192, 123, 23, 0.7)';
-                submitBtn.style.animation = 'pulsePacks 3s infinite';
-                submitBtn.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(192, 123, 23, 0.2)';
-                bookingForm.reset();
-                packCards.forEach(c => c.classList.remove('selected'));
-                if (weddingPacksSection) weddingPacksSection.style.display = 'none';
-                if (customPackMessage) customPackMessage.value = '';
-                alert('Thank you for your booking request! We will contact you soon via your preferred method.');
-            }, 2000);
-        });
-    }
+  
+
+
     
     const today = new Date().toISOString().split('T')[0];
     const eventDateInput = document.getElementById('eventDate');
