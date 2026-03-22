@@ -2260,7 +2260,6 @@
         </div>
     </div>
 </div>
-
 <script>
 // ==================== EMAILJS - FORMULAIRE CORRIGÉ ====================
 const bookingForm = document.getElementById('bookingForm');
@@ -2273,9 +2272,10 @@ window.closeModal = function() {
 
 if (bookingForm) {
     bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+        e.preventDefault();  // Bloque la soumission classique
+        e.stopPropagation(); // Évite toute propagation
 
-        // Récupération des champs pour validation
+        // Récupération des champs
         const fullName = document.getElementById('fullName').value;
         const phone = document.getElementById('phone').value;
         const email = document.getElementById('email').value;
@@ -2284,31 +2284,26 @@ if (bookingForm) {
         const capacity = document.getElementById('capacity').value;
         const eventType = document.getElementById('eventType').value;
         const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
-        const customPackMsg = document.getElementById('customPackMessage').value.trim();
 
+        // Validation
         if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
             alert('Veuillez remplir tous les champs obligatoires (*).');
-            return;
+            return false;
         }
         if (capacity < 1 || capacity > 1000) {
             alert('Veuillez entrer un nombre de personnes valide (1 à 1000).');
-            return;
+            return false;
         }
 
-        
-
-        // Désactiver le bouton pendant l'envoi
         const submitBtn = document.querySelector('.submit-btn');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = 'Envoi en cours...';
         submitBtn.disabled = true;
 
-        // ENVOI VIA EMAILJS AVEC LE BON SERVICE ID
         emailjs.sendForm('service_g3tw7qc', 'template_g2h2dds', this)
             .then(function(response) {
                 console.log('✅ Succès !', response.status, response.text);
                 bookingForm.reset();
-             
                 thankModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             })
@@ -2320,8 +2315,13 @@ if (bookingForm) {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             });
+
+        return false;
     });
+} else {
+    console.error('Formulaire #bookingForm introuvable');
 }
+
 
 // === GOLD PARTICLES (réduites sur mobile pour performance)
 const goldContainer = document.getElementById('goldDust');
@@ -2656,6 +2656,7 @@ document.head.appendChild(flashStyle);
                             <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
                         </div>
                     </div>
+                    <input type="hidden" name="title" value="Nouvelle demande de réservation">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="email" class="required"><i class="fas fa-envelope"></i> Email Address</label>
