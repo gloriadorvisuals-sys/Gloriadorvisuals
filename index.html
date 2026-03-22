@@ -2314,19 +2314,20 @@ if (bookingForm) {
         submitBtn.disabled = true;
 
         // Préparer les données (doivent correspondre aux {{...}} du template)
-        const templateParams = {
-            name: fullName,                     // votre template utilise {{name}}
-            phone: phone,
-            email: email,
-            eventDate: eventDate,
-            eventLocation: eventLocation,
-            capacity: capacity,
-            eventType: eventType,
-            pack: selectedPack,
-            customPackMessage: customPackMsg,
-            contactMethod: contactMethod ? contactMethod.value : '',
-            message: message
-        };
+       const templateParams = {
+    name: fullName,
+    fullName: fullName,     // <-- ajoute cette ligne
+    phone: phone,
+    email: email,
+    eventDate: eventDate,
+    eventLocation: eventLocation,
+    capacity: capacity,
+    eventType: eventType,
+    pack: selectedPack,
+    customPackMessage: customPackMsg,
+    contactMethod: contactMethod ? contactMethod.value : '',
+    message: message
+};
 
         try {
             const response = await emailjs.send('service_3z5fgtf', 'template_g2h2dds', templateParams);
