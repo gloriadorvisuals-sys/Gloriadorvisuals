@@ -2262,66 +2262,65 @@
 </div>
 <script>
 // ==================== EMAILJS - FORMULAIRE CORRIGÉ ====================
-const bookingForm = document.getElementById('bookingForm');
-const thankModal = document.getElementById('thankyouModal');
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingForm = document.getElementById('bookingForm');
+    const thankModal = document.getElementById('thankyouModal');
 
-window.closeModal = function() {
-    thankModal.classList.remove('active');
-    document.body.style.overflow = '';
-};
+    window.closeModal = function() {
+        thankModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
 
-if (bookingForm) {
-    bookingForm.addEventListener('submit', function(e) {
-        e.preventDefault();  // Bloque la soumission classique
-        e.stopPropagation(); // Évite toute propagation
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        // Récupération des champs
-        const fullName = document.getElementById('fullName').value;
-        const phone = document.getElementById('phone').value;
-        const email = document.getElementById('email').value;
-        const eventDate = document.getElementById('eventDate').value;
-        const eventLocation = document.getElementById('eventLocation').value;
-        const capacity = document.getElementById('capacity').value;
-        const eventType = document.getElementById('eventType').value;
-        const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventLocation = document.getElementById('eventLocation').value;
+            const capacity = document.getElementById('capacity').value;
+            const eventType = document.getElementById('eventType').value;
+            const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
 
-        // Validation
-        if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
-            alert('Veuillez remplir tous les champs obligatoires (*).');
+            if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
+                alert('Veuillez remplir tous les champs obligatoires (*).');
+                return false;
+            }
+            if (capacity < 1 || capacity > 1000) {
+                alert('Veuillez entrer un nombre de personnes valide (1 à 1000).');
+                return false;
+            }
+
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Envoi en cours...';
+            submitBtn.disabled = true;
+
+            emailjs.sendForm('service_g3tw7qc', 'template_g2h2dds', this)
+                .then(function(response) {
+                    console.log('✅ Succès !', response.status, response.text);
+                    bookingForm.reset();
+                    thankModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                })
+                .catch(function(error) {
+                    console.error('❌ Erreur EmailJS:', error);
+                    alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
+                })
+                .finally(function() {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+
             return false;
-        }
-        if (capacity < 1 || capacity > 1000) {
-            alert('Veuillez entrer un nombre de personnes valide (1 à 1000).');
-            return false;
-        }
-
-        const submitBtn = document.querySelector('.submit-btn');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = 'Envoi en cours...';
-        submitBtn.disabled = true;
-
-        emailjs.sendForm('service_g3tw7qc', 'template_g2h2dds', this)
-            .then(function(response) {
-                console.log('✅ Succès !', response.status, response.text);
-                bookingForm.reset();
-                thankModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            })
-            .catch(function(error) {
-                console.error('❌ Erreur EmailJS:', error);
-                alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
-            })
-            .finally(function() {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            });
-
-        return false;
-    });
-} else {
-    console.error('Formulaire #bookingForm introuvable');
-}
-
+        });
+    } else {
+        console.error('Formulaire #bookingForm introuvable');
+    }
+});
 
 // === GOLD PARTICLES (réduites sur mobile pour performance)
 const goldContainer = document.getElementById('goldDust');
