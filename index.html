@@ -2891,42 +2891,6 @@ function createSparklesPacks() {
 
 
 
-let currentSlideTestimonials = 2;
-
-function updateSliderTestimonials() {
-    if (cardsTestimonials.length === 0) return;
-    const cardWidth = cardsTestimonials[0].offsetWidth + 20;
-    const translateX = -(currentSlideTestimonials * cardWidth) + (window.innerWidth/2 - cardWidth/2);
-    trackTestimonials.style.transform = `translateX(${translateX}px)`;
-    cardsTestimonials.forEach((card, index) => {
-        if(index === currentSlideTestimonials){
-            card.classList.add('center');
-        } else {
-            card.classList.remove('center');
-        }
-    });
-}
-
-if (nextBtnTestimonials) {
-    nextBtnTestimonials.addEventListener("click", () => {
-        if (currentSlideTestimonials < cardsTestimonials.length - 1) {
-            currentSlideTestimonials++;
-            updateSliderTestimonials();
-        }
-    });
-}
-
-if (prevBtnTestimonials) {
-    prevBtnTestimonials.addEventListener("click", () => {
-        if (currentSlideTestimonials > 0) {
-            currentSlideTestimonials--;
-            updateSliderTestimonials();
-        }
-    });
-}
-
-window.addEventListener("resize", updateSliderTestimonials);
-
 function createSparkles(containerId, count = 30) {
     const container = document.getElementById(containerId);
     if (!container) return;
