@@ -2262,7 +2262,10 @@
 </div>
 
 <script>
-// === FORMULAIRE VERS EMAILJS ===
+// ==================== EMAILJS - FORMULAIRE CORRIGÉ ====================
+// Initialisation EmailJS (déjà présente plus bas, on garde l'init en bas)
+// On va utiliser sendForm pour simplifier et éviter les doublons
+
 const bookingForm = document.getElementById('bookingForm');
 const thankModal = document.getElementById('thankyouModal');
 
@@ -2272,10 +2275,12 @@ window.closeModal = function() {
 };
 
 if (bookingForm) {
-    bookingForm.addEventListener('submit', async function(e) {
+    // On supprime tous les écouteurs existants (mais il n'y en a qu'un)
+    // On crée un nouvel écouteur propre
+    bookingForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Récupération des champs
+        // Validations personnalisées supplémentaires (capacité, packs, etc.)
         const fullName = document.getElementById('fullName').value;
         const phone = document.getElementById('phone').value;
         const email = document.getElementById('email').value;
@@ -2284,10 +2289,8 @@ if (bookingForm) {
         const capacity = document.getElementById('capacity').value;
         const eventType = document.getElementById('eventType').value;
         const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
-        const message = document.getElementById('message').value;
         const customPackMsg = document.getElementById('customPackMessage').value.trim();
 
-        // Validation
         if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
             alert('Veuillez remplir tous les champs obligatoires (*).');
             return;
@@ -2297,252 +2300,233 @@ if (bookingForm) {
             return;
         }
 
-        let selectedPack = '';
         if (eventType === 'wedding') {
             const packRadio = document.querySelector('input[name="pack"]:checked');
             if (!packRadio && !customPackMsg) {
                 alert('Veuillez sélectionner un pack standard ou décrire votre pack personnalisé.');
                 return;
             }
-            selectedPack = packRadio ? packRadio.value : '';
         }
 
-        // Désactiver le bouton
+        // Désactiver le bouton pendant l'envoi
         const submitBtn = document.querySelector('.submit-btn');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = 'Envoi en cours...';
         submitBtn.disabled = true;
 
-        // Préparer les données
-        const templateParams = {
-            title: "Nouvelle demande de réservation",
-            name: fullName,
-            fullName: fullName,
-            phone: phone,
-            email: email,
-            eventDate: eventDate,
-            eventLocation: eventLocation,
-            capacity: capacity,
-            eventType: eventType,
-            pack: selectedPack,
-            customPackMessage: customPackMsg,
-            contactMethod: contactMethod ? contactMethod.value : '',
-            message: message
-        };
-
-        try {
-            const response = await emailjs.send('service_3z5fgtf', 'template_g2h2dds', templateParams);
-            console.log('Succès !', response);
-
-            // Réinitialisation
-            bookingForm.reset();
-            document.querySelectorAll('.booking-form .pack-card').forEach(c => c.classList.remove('selected'));
-            document.getElementById('weddingPacksSection').style.display = 'none';
-            document.getElementById('customPackMessage').value = '';
-            document.getElementById('packServicesSection').classList.remove('active');
-
-            // Affichage de la modale
-            thankModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-        } catch (error) {
-            console.error('Erreur EmailJS:', error);
-            alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
-        } finally {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }
+        // Envoi via EmailJS (sendForm envoie directement les champs du formulaire)
+        emailjs.sendForm('service_3z5fgtf', 'template_g2h2dds', this)
+            .then(function(response) {
+                console.log('Succès !', response.status, response.text);
+                // Réinitialisation du formulaire
+                bookingForm.reset();
+                document.querySelectorAll('.booking-form .pack-card').forEach(c => c.classList.remove('selected'));
+                document.getElementById('weddingPacksSection').style.display = 'none';
+                document.getElementById('customPackMessage').value = '';
+                document.getElementById('packServicesSection').classList.remove('active');
+                // Affichage de la modale
+                thankModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            })
+            .catch(function(error) {
+                console.error('Erreur EmailJS:', error);
+                alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
+            })
+            .finally(function() {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
     });
 }
 
-    // === GOLD PARTICLES (réduites sur mobile pour performance)
-    const goldContainer = document.getElementById('goldDust');
-    let isMobile = window.innerWidth <= 768;
-    let particleCount = isMobile ? 30 : 100;
-    let starCount = isMobile ? 15 : 50;
+// === GOLD PARTICLES (réduites sur mobile pour performance)
+const goldContainer = document.getElementById('goldDust');
+let isMobile = window.innerWidth <= 768;
+let particleCount = isMobile ? 30 : 100;
+let starCount = isMobile ? 15 : 50;
 
-    function createRandomParticle(c) {
-        const p = document.createElement('div');
-        p.classList.add('gold-particle', ['small','medium','large'][Math.floor(Math.random()*3)]);
-        p.style.left = `${50+Math.random()*20-10}%`;
-        p.style.top = `${50+Math.random()*20-10}%`;
-        p.style.setProperty('--random-x', Math.random());
-        p.style.setProperty('--random-y', Math.random());
-        p.style.animationDelay = `${Math.random()*5}s`;
-        const dur = 5+Math.random()*10;
-        p.style.animationDuration = `${dur}s`;
-        c.appendChild(p);
-        setTimeout(() => { p.remove(); createRandomParticle(c); }, dur*1000);
-    }
-    function createStar(c) {
-        const s = document.createElement('div');
-        s.classList.add('star', ['small','medium','large'][Math.floor(Math.random()*3)]);
-        s.style.left = `${Math.random()*100}vw`;
-        s.style.top = `${Math.random()*100}vh`;
-        s.style.animationDelay = `${Math.random()*3}s`;
-        const dur = 2+Math.random()*3;
-        s.style.animationDuration = `${dur}s`;
-        c.appendChild(s);
-        setTimeout(() => { s.remove(); createStar(c); }, dur*1000);
-    }
-    window.addEventListener('load', () => {
-        for (let i = 0; i < particleCount; i++) createRandomParticle(goldContainer);
-        for (let i = 0; i < starCount; i++) createStar(goldContainer);
-        document.querySelectorAll('.sparkle').forEach(s => {
-            setInterval(() => { s.style.transform = `scale(${0.8+Math.random()*0.4})`; s.style.opacity = 0.2+Math.random()*0.6; }, 2000+Math.random()*3000);
-        });
-        document.querySelectorAll('.light-flare').forEach(f => {
-            setInterval(() => { f.style.transform = `translate(${Math.random()*20-10}px,${Math.random()*20-10}px)`; }, 4000+Math.random()*4000);
-        });
+function createRandomParticle(c) {
+    const p = document.createElement('div');
+    p.classList.add('gold-particle', ['small','medium','large'][Math.floor(Math.random()*3)]);
+    p.style.left = `${50+Math.random()*20-10}%`;
+    p.style.top = `${50+Math.random()*20-10}%`;
+    p.style.setProperty('--random-x', Math.random());
+    p.style.setProperty('--random-y', Math.random());
+    p.style.animationDelay = `${Math.random()*5}s`;
+    const dur = 5+Math.random()*10;
+    p.style.animationDuration = `${dur}s`;
+    c.appendChild(p);
+    setTimeout(() => { p.remove(); createRandomParticle(c); }, dur*1000);
+}
+function createStar(c) {
+    const s = document.createElement('div');
+    s.classList.add('star', ['small','medium','large'][Math.floor(Math.random()*3)]);
+    s.style.left = `${Math.random()*100}vw`;
+    s.style.top = `${Math.random()*100}vh`;
+    s.style.animationDelay = `${Math.random()*3}s`;
+    const dur = 2+Math.random()*3;
+    s.style.animationDuration = `${dur}s`;
+    c.appendChild(s);
+    setTimeout(() => { s.remove(); createStar(c); }, dur*1000);
+}
+window.addEventListener('load', () => {
+    for (let i = 0; i < particleCount; i++) createRandomParticle(goldContainer);
+    for (let i = 0; i < starCount; i++) createStar(goldContainer);
+    document.querySelectorAll('.sparkle').forEach(s => {
+        setInterval(() => { s.style.transform = `scale(${0.8+Math.random()*0.4})`; s.style.opacity = 0.2+Math.random()*0.6; }, 2000+Math.random()*3000);
     });
+    document.querySelectorAll('.light-flare').forEach(f => {
+        setInterval(() => { f.style.transform = `translate(${Math.random()*20-10}px,${Math.random()*20-10}px)`; }, 4000+Math.random()*4000);
+    });
+});
 
-    // === BURGER MENU ===
-    const burgerBtn = document.getElementById('burgerBtn');
-    const overlay = document.getElementById('mobileNavOverlay');
-    burgerBtn.addEventListener('click', () => {
-        const open = overlay.classList.contains('open');
-        overlay.classList.toggle('open', !open);
-        burgerBtn.classList.toggle('open', !open);
-        document.body.style.overflow = open ? '' : 'hidden';
-    });
-    function closeMobileNav() {
-        overlay.classList.remove('open');
-        burgerBtn.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href.startsWith('#') && href.length > 1) {
-                e.preventDefault();
-                closeMobileNav();
-                const target = document.querySelector(href);
-                if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 400);
-            } else {
-                document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                closeMobileNav();
-            }
-        });
-    });
-    document.getElementById('mobileBookBtn').addEventListener('click', () => {
-        closeMobileNav();
-        setTimeout(() => document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' }), 400);
-    });
-    document.getElementById('mobileGalleryBtn').addEventListener('click', () => {
-        closeMobileNav();
-        setTimeout(() => document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' }), 400);
-    });
-    document.getElementById('mobilePacksBtn').addEventListener('click', () => { closeMobileNav(); document.getElementById('packsSection').scrollIntoView({ behavior: 'smooth' }); });
-
-    // === DESKTOP NAV ===
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href.startsWith('#') && href.length > 1) {
-                e.preventDefault();
-                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-                this.classList.add('active');
-                const target = document.querySelector(href);
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
-
-    // === GALLERY BTN → scroll ===
-    document.getElementById('galleryBtn').addEventListener('click', () => {
-        document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // === BOOK NOW → scroll ===
-    document.getElementById('bookNowBtn').addEventListener('click', () => {
-        document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
-    });
-
-    // === SEE PACKS ===
-    document.getElementById('seePacksBtn').addEventListener('click', () => { document.getElementById('packsSection').scrollIntoView({ behavior: 'smooth' }); });
-
-    // === FULLSCREEN ===
-    const fullscreenBtn = document.getElementById('fullscreenBtn');
-    fullscreenBtn.addEventListener('click', function() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => console.log(err));
-            fullscreenBtn.querySelector('.fullscreen-icon').innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+// === BURGER MENU ===
+const burgerBtn = document.getElementById('burgerBtn');
+const overlay = document.getElementById('mobileNavOverlay');
+burgerBtn.addEventListener('click', () => {
+    const open = overlay.classList.contains('open');
+    overlay.classList.toggle('open', !open);
+    burgerBtn.classList.toggle('open', !open);
+    document.body.style.overflow = open ? '' : 'hidden';
+});
+function closeMobileNav() {
+    overlay.classList.remove('open');
+    burgerBtn.classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#') && href.length > 1) {
+            e.preventDefault();
+            closeMobileNav();
+            const target = document.querySelector(href);
+            if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 400);
         } else {
-            document.exitFullscreen();
-            fullscreenBtn.querySelector('.fullscreen-icon').innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+            document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            closeMobileNav();
         }
     });
+});
+document.getElementById('mobileBookBtn').addEventListener('click', () => {
+    closeMobileNav();
+    setTimeout(() => document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' }), 400);
+});
+document.getElementById('mobileGalleryBtn').addEventListener('click', () => {
+    closeMobileNav();
+    setTimeout(() => document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' }), 400);
+});
+document.getElementById('mobilePacksBtn').addEventListener('click', () => { closeMobileNav(); document.getElementById('packsSection').scrollIntoView({ behavior: 'smooth' }); });
 
-    // === MUSIC ===
-    const music = document.getElementById('backgroundMusic');
-    const musicToggle = document.getElementById('musicToggle');
-    music.volume = 0.5;
-    window.addEventListener('DOMContentLoaded', () => {
-        music.play().then(() => { musicToggle.innerHTML = '❚❚'; }).catch(() => {
-            musicToggle.innerHTML = '♪';
-            document.addEventListener('click', () => { music.play().then(() => { musicToggle.innerHTML = '❚❚'; }); }, { once: true });
-        });
-    });
-    musicToggle.addEventListener('click', function() {
-        if (music.paused) { music.play(); this.innerHTML = '❚❚'; }
-        else { music.pause(); this.innerHTML = '♪'; }
-    });
-
-    // === GALLERY SCROLL ===
-    window.addEventListener('DOMContentLoaded', () => {
-        const trackWrapper = document.getElementById('galleryTrack');
-        const scrollLeftBtn = document.getElementById('scrollLeftBtn');
-        const scrollRightBtn = document.getElementById('scrollRightBtn');
-        const sizeBtns = document.querySelectorAll('.size-btn');
-        if (!trackWrapper) return;
-        let isScrolling = false;
-        function scrollGallery(dir) {
-            if (isScrolling) return; isScrolling = true;
-            trackWrapper.scrollTo({ left: trackWrapper.scrollLeft + (dir === 'left' ? -400 : 400), behavior: 'smooth' });
-            setTimeout(() => isScrolling = false, 300);
+// === DESKTOP NAV ===
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#') && href.length > 1) {
+            e.preventDefault();
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            this.classList.add('active');
+            const target = document.querySelector(href);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
         }
-        scrollLeftBtn.addEventListener('click', () => scrollGallery('left'));
-        scrollRightBtn.addEventListener('click', () => scrollGallery('right'));
-        document.getElementById('seeGalleryBtn').addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
-        document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') scrollGallery('left'); else if (e.key === 'ArrowRight') scrollGallery('right'); });
-        sizeBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const size = this.getAttribute('data-size');
-                sizeBtns.forEach(b => b.classList.remove('active')); this.classList.add('active');
-                document.querySelectorAll('.track__item').forEach(item => { item.classList.remove('small','medium','large'); item.classList.add(size); });
-            });
-        });
-        function updateScrollBtns() {
-            const max = trackWrapper.scrollWidth - trackWrapper.clientWidth;
-            scrollLeftBtn.style.opacity = trackWrapper.scrollLeft <= 0 ? '0.5' : '1';
-            scrollRightBtn.style.opacity = trackWrapper.scrollLeft >= max ? '0.5' : '1';
-        }
-        trackWrapper.addEventListener('scroll', updateScrollBtns);
-        updateScrollBtns();
-        let touchStartX = 0, touchStartScroll = 0;
-        trackWrapper.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchStartScroll = trackWrapper.scrollLeft; }, { passive: true });
-        trackWrapper.addEventListener('touchmove', e => { trackWrapper.scrollLeft = touchStartScroll + (touchStartX - e.touches[0].clientX); }, { passive: true });
+    });
+});
 
-        // Gallery interactions
-        document.querySelectorAll('.track__item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                const f = document.createElement('div');
-                f.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(234,177,86,0.3) 0%,transparent 70%);z-index:4;pointer-events:none;opacity:0;animation:flashEffect 0.6s ease-out;';
-                this.appendChild(f);
-                setTimeout(() => { if (f.parentNode===this) this.removeChild(f); }, 600);
-            });
-            item.addEventListener('click', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => this.style.transform = '', 200); });
-        });
+// === GALLERY BTN → scroll ===
+document.getElementById('galleryBtn').addEventListener('click', () => {
+    document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+});
 
-        // Booking buttons
-        document.querySelector('.btn-packages')?.addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
-        document.querySelector('.btn-book-now')?.addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
+// === BOOK NOW → scroll ===
+document.getElementById('bookNowBtn').addEventListener('click', () => {
+    document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+});
+
+// === SEE PACKS ===
+document.getElementById('seePacksBtn').addEventListener('click', () => { document.getElementById('packsSection').scrollIntoView({ behavior: 'smooth' }); });
+
+// === FULLSCREEN ===
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+fullscreenBtn.addEventListener('click', function() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+        fullscreenBtn.querySelector('.fullscreen-icon').innerHTML = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+    } else {
+        document.exitFullscreen();
+        fullscreenBtn.querySelector('.fullscreen-icon').innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+    }
+});
+
+// === MUSIC ===
+const music = document.getElementById('backgroundMusic');
+const musicToggle = document.getElementById('musicToggle');
+music.volume = 0.5;
+window.addEventListener('DOMContentLoaded', () => {
+    music.play().then(() => { musicToggle.innerHTML = '❚❚'; }).catch(() => {
+        musicToggle.innerHTML = '♪';
+        document.addEventListener('click', () => { music.play().then(() => { musicToggle.innerHTML = '❚❚'; }); }, { once: true });
+    });
+});
+musicToggle.addEventListener('click', function() {
+    if (music.paused) { music.play(); this.innerHTML = '❚❚'; }
+    else { music.pause(); this.innerHTML = '♪'; }
+});
+
+// === GALLERY SCROLL ===
+window.addEventListener('DOMContentLoaded', () => {
+    const trackWrapper = document.getElementById('galleryTrack');
+    const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+    const scrollRightBtn = document.getElementById('scrollRightBtn');
+    const sizeBtns = document.querySelectorAll('.size-btn');
+    if (!trackWrapper) return;
+    let isScrolling = false;
+    function scrollGallery(dir) {
+        if (isScrolling) return; isScrolling = true;
+        trackWrapper.scrollTo({ left: trackWrapper.scrollLeft + (dir === 'left' ? -400 : 400), behavior: 'smooth' });
+        setTimeout(() => isScrolling = false, 300);
+    }
+    scrollLeftBtn.addEventListener('click', () => scrollGallery('left'));
+    scrollRightBtn.addEventListener('click', () => scrollGallery('right'));
+    document.getElementById('seeGalleryBtn').addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
+    document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') scrollGallery('left'); else if (e.key === 'ArrowRight') scrollGallery('right'); });
+    sizeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const size = this.getAttribute('data-size');
+            sizeBtns.forEach(b => b.classList.remove('active')); this.classList.add('active');
+            document.querySelectorAll('.track__item').forEach(item => { item.classList.remove('small','medium','large'); item.classList.add(size); });
+        });
+    });
+    function updateScrollBtns() {
+        const max = trackWrapper.scrollWidth - trackWrapper.clientWidth;
+        scrollLeftBtn.style.opacity = trackWrapper.scrollLeft <= 0 ? '0.5' : '1';
+        scrollRightBtn.style.opacity = trackWrapper.scrollLeft >= max ? '0.5' : '1';
+    }
+    trackWrapper.addEventListener('scroll', updateScrollBtns);
+    updateScrollBtns();
+    let touchStartX = 0, touchStartScroll = 0;
+    trackWrapper.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchStartScroll = trackWrapper.scrollLeft; }, { passive: true });
+    trackWrapper.addEventListener('touchmove', e => { trackWrapper.scrollLeft = touchStartScroll + (touchStartX - e.touches[0].clientX); }, { passive: true });
+
+    // Gallery interactions
+    document.querySelectorAll('.track__item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            const f = document.createElement('div');
+            f.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(234,177,86,0.3) 0%,transparent 70%);z-index:4;pointer-events:none;opacity:0;animation:flashEffect 0.6s ease-out;';
+            this.appendChild(f);
+            setTimeout(() => { if (f.parentNode===this) this.removeChild(f); }, 600);
+        });
+        item.addEventListener('click', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => this.style.transform = '', 200); });
     });
 
-    const flashStyle = document.createElement('style');
-    flashStyle.textContent = '@keyframes flashEffect{0%{opacity:0;transform:scale(0.5)}50%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.2)}}';
-    document.head.appendChild(flashStyle);
+    // Booking buttons
+    document.querySelector('.btn-packages')?.addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
+    document.querySelector('.btn-book-now')?.addEventListener('click', function() { this.style.transform = 'scale(0.95)'; setTimeout(() => this.style.transform = '', 200); });
+});
+
+const flashStyle = document.createElement('style');
+flashStyle.textContent = '@keyframes flashEffect{0%{opacity:0;transform:scale(0.5)}50%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.2)}}';
+document.head.appendChild(flashStyle);
 </script>
 
 <!-- WHO-WE-ARE SECTION -->
@@ -3277,29 +3261,6 @@ window.addEventListener('DOMContentLoaded', () => {
     initGalleryScroll();
     initGalleryInteractions();
 });
-
-document.getElementById("bookingForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    emailjs.sendForm(
-        "service_3z5fgtf",   // 🔴 TON SERVICE ID
-        "template_g2h2dds", // 🔴 TON TEMPLATE ID
-        this
-    )
-    .then(function(response) {
-        console.log("SUCCESS!", response.status, response.text);
-
-        // ouvrir modal
-        document.getElementById("thankyouModal").classList.add("active");
-
-    }, function(error) {
-        console.log("FAILED...", error);
-        alert("Erreur lors de l'envoi ❌");
-    });
-});
-function closeModal() {
-    document.getElementById("thankyouModal").classList.remove("active");
-}
 
 </script>
 <!-- MODALE DE CONFIRMATION -->
