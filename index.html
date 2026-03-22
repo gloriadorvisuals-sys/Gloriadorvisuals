@@ -2263,9 +2263,6 @@
 
 <script>
 // ==================== EMAILJS - FORMULAIRE CORRIGÉ ====================
-// Initialisation EmailJS (déjà présente plus bas, on garde l'init en bas)
-// On va utiliser sendForm pour simplifier et éviter les doublons
-
 const bookingForm = document.getElementById('bookingForm');
 const thankModal = document.getElementById('thankyouModal');
 
@@ -2275,12 +2272,10 @@ window.closeModal = function() {
 };
 
 if (bookingForm) {
-    // On supprime tous les écouteurs existants (mais il n'y en a qu'un)
-    // On crée un nouvel écouteur propre
     bookingForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Validations personnalisées supplémentaires (capacité, packs, etc.)
+        // Récupération des champs pour validation
         const fullName = document.getElementById('fullName').value;
         const phone = document.getElementById('phone').value;
         const email = document.getElementById('email').value;
@@ -2314,22 +2309,20 @@ if (bookingForm) {
         submitBtn.innerHTML = 'Envoi en cours...';
         submitBtn.disabled = true;
 
-        // Envoi via EmailJS (sendForm envoie directement les champs du formulaire)
-        emailjs.sendForm('service_3z5fgtf', 'template_g2h2dds', this)
+        // ENVOI VIA EMAILJS AVEC LE BON SERVICE ID
+        emailjs.sendForm('service_g3tw7qc', 'template_g2h2dds', this)
             .then(function(response) {
-                console.log('Succès !', response.status, response.text);
-                // Réinitialisation du formulaire
+                console.log('✅ Succès !', response.status, response.text);
                 bookingForm.reset();
                 document.querySelectorAll('.booking-form .pack-card').forEach(c => c.classList.remove('selected'));
                 document.getElementById('weddingPacksSection').style.display = 'none';
                 document.getElementById('customPackMessage').value = '';
                 document.getElementById('packServicesSection').classList.remove('active');
-                // Affichage de la modale
                 thankModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             })
             .catch(function(error) {
-                console.error('Erreur EmailJS:', error);
+                console.error('❌ Erreur EmailJS:', error);
                 alert('Une erreur est survenue. Veuillez réessayer ou nous contacter directement.');
             })
             .finally(function() {
