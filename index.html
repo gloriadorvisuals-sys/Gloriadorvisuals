@@ -2295,13 +2295,7 @@ if (bookingForm) {
             return;
         }
 
-        if (eventType === 'wedding') {
-            const packRadio = document.querySelector('input[name="pack"]:checked');
-            if (!packRadio && !customPackMsg) {
-                alert('Veuillez sélectionner un pack standard ou décrire votre pack personnalisé.');
-                return;
-            }
-        }
+        
 
         // Désactiver le bouton pendant l'envoi
         const submitBtn = document.querySelector('.submit-btn');
@@ -2314,10 +2308,7 @@ if (bookingForm) {
             .then(function(response) {
                 console.log('✅ Succès !', response.status, response.text);
                 bookingForm.reset();
-                document.querySelectorAll('.booking-form .pack-card').forEach(c => c.classList.remove('selected'));
-                document.getElementById('weddingPacksSection').style.display = 'none';
-                document.getElementById('customPackMessage').value = '';
-                document.getElementById('packServicesSection').classList.remove('active');
+             
                 thankModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             })
