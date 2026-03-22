@@ -3277,6 +3277,30 @@ window.addEventListener('DOMContentLoaded', () => {
     initGalleryScroll();
     initGalleryInteractions();
 });
+
+document.getElementById("bookingForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm(
+        "service_3z5fgtf",   // 🔴 TON SERVICE ID
+        "template_g2h2dds", // 🔴 TON TEMPLATE ID
+        this
+    )
+    .then(function(response) {
+        console.log("SUCCESS!", response.status, response.text);
+
+        // ouvrir modal
+        document.getElementById("thankyouModal").classList.add("active");
+
+    }, function(error) {
+        console.log("FAILED...", error);
+        alert("Erreur lors de l'envoi ❌");
+    });
+});
+function closeModal() {
+    document.getElementById("thankyouModal").classList.remove("active");
+}
+
 </script>
 <!-- MODALE DE CONFIRMATION -->
 <div id="thankyouModal" class="thankyou-modal">
