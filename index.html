@@ -2272,7 +2272,63 @@ window.closeModal = function() {
 };
 
 if (bookingForm) {
-   
+    bookingForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Récupération des champs
+        const fullName = document.getElementById('fullName').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventLocation = document.getElementById('eventLocation').value;
+        const capacity = document.getElementById('capacity').value;
+        const eventType = document.getElementById('eventType').value;
+        const contactMethod = document.querySelector('input[name="contactMethod"]:checked');
+        const message = document.getElementById('message').value;
+        const customPackMsg = document.getElementById('customPackMessage').value.trim();
+
+        // Validation
+        if (!fullName || !phone || !email || !eventDate || !eventLocation || !capacity || !eventType || !contactMethod) {
+            alert('Veuillez remplir tous les champs obligatoires (*).');
+            return;
+        }
+        if (capacity < 1 || capacity > 1000) {
+            alert('Veuillez entrer un nombre de personnes valide (1 à 1000).');
+            return;
+        }
+
+        let selectedPack = '';
+        if (eventType === 'wedding') {
+            const packRadio = document.querySelector('input[name="pack"]:checked');
+            if (!packRadio && !customPackMsg) {
+                alert('Veuillez sélectionner un pack standard ou décrire votre pack personnalisé.');
+                return;
+            }
+            selectedPack = packRadio ? packRadio.value : '';
+        }
+
+        // Désactiver le bouton
+        const submitBtn = document.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Envoi en cours...';
+        submitBtn.disabled = true;
+
+        // Préparer les données
+        const templateParams = {
+            title: "Nouvelle demande de réservation",
+            name: fullName,
+            fullName: fullName,
+            phone: phone,
+            email: email,
+            eventDate: eventDate,
+            eventLocation: eventLocation,
+            capacity: capacity,
+            eventType: eventType,
+            pack: selectedPack,
+            customPackMessage: customPackMsg,
+            contactMethod: contactMethod ? contactMethod.value : '',
+            message: message
+        };
 
         try {
             const response = await emailjs.send('service_3z5fgtf', 'template_g2h2dds', templateParams);
@@ -2296,7 +2352,8 @@ if (bookingForm) {
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
         }
-    }
+    });
+}
 
     // === GOLD PARTICLES (réduites sur mobile pour performance)
     const goldContainer = document.getElementById('goldDust');
